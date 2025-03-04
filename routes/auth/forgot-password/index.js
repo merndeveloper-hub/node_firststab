@@ -10,9 +10,10 @@ import { SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import userType from "../../../models/userType/index.js";
 
 const schema = Joi.object({
- 
+ userType:Joi.string().required(),
   email: Joi.string()
   .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
   .pattern(
@@ -56,9 +57,9 @@ const forgetPaasswd = async (req, res) => {
         .json({ success: false, message: error.details[0].message });
     }
 
-    const { password, email } = req.body;
+    const { password, email,userType } = req.body;
 
-    const emailExist = await findOneAndSelect("user", { email });
+    const emailExist = await findOneAndSelect("user", { email,userType });
     if (!emailExist) {
       return res
         .status(400)
@@ -74,7 +75,7 @@ const forgetPaasswd = async (req, res) => {
 
     const user_passwd_updated = await updateDocument(
       "user",
-      {email},
+      {email,userType},
       { password:req.body.password }
     
     );

@@ -32,6 +32,16 @@ const userSchema = new mongoose.Schema(
     password: {
       type: schemaType.TypeString,
     },
+    businessname: {
+      type: schemaType.TypeString,
+    },
+    businessaddress: {
+      type: schemaType.TypeString,
+    },
+    businessphoneNo: {
+      type: schemaType.TypeString,
+    },
+
     city: {
       type: schemaType.TypeString,
     }, zipCode: {
@@ -63,3 +73,6 @@ const userSchema = new mongoose.Schema(
 );
 
 export default userSchema;
+
+
+

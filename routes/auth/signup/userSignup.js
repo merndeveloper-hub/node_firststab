@@ -3,6 +3,7 @@ import {
   findOne,
   insertNewDocument,
   findOneAndSelect,
+  getAggregate,
 } from "../../../helpers/index.js";
 import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
@@ -93,6 +94,17 @@ const userSignup = async (req, res) => {
 
     req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
+    const userCount = await getAggregate("user", [
+      {
+        $match: { status: "Active", userType: "pro" },
+      },
+      { $count: "activeProUsers" },
+      {
+        $sort: {
+          _id: -1,
+        },
+      },
+    ]);
     const user = await insertNewDocument("user", {
       //...req.body,
       password: req.body.password,
@@ -102,6 +114,7 @@ const userSignup = async (req, res) => {
       userType,
       first_Name,
       last_Name,
+      totalPro: userCount[0].activeProUsers + 1
      // type: user_type._id,
     });
 

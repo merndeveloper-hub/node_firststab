@@ -4,6 +4,7 @@ import {
   insertNewDocument,
   findOneAndSelect,
   updateDocument,
+  getAggregate,
 } from "../../../helpers/index.js";
 import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 
@@ -60,6 +61,15 @@ const schema = Joi.object({
     }),
   confirm_password: Joi.string().required().valid(Joi.ref("password")),
   status: Joi.string(),
+  businessname: Joi.string(),
+  businessaddress: Joi.string(),
+  businessphoneNo: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+   .messages({
+     "string.pattern.base":
+       "Mobile number must be 8-15 digits and may include a country code (e.g., +123456789).",
+     "any.required": "Mobile number is required.",
+   }),
+
 
   // dateOfBirth: Joi.date()
   //   .less("now") // Ensures date is in the past
@@ -128,7 +138,25 @@ const proSignup = async (req, res) => {
   
     req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
+    const userCount = await getAggregate("user", [
+      {
+        $match: { status: "Active", userType: "pro" },
+      },
+      { $count: "activeProUsers" },
+      {
+        $sort: {
+          _id: -1,
+        },
+      },
+    ]);
 
+
+    
+    
+    // const result = await collection.aggregate([
+    //   { $match: { status: "active", userType: "pro" } },
+    //   { $count: "activeProUsers" }
+    // ]).toArray();
 
     // const inscounter = await insertNewDocument("counter",{
     //   id: userType
@@ -139,35 +167,35 @@ const proSignup = async (req, res) => {
 
     // console.log(inscounter,"inscounter");
     
-    const counter = await updateDocument(
-      "counter",
-      { id: userType }, // Find by ID
-      { $inc: { count: 1 } }// Fix: Move `$inc` inside `$set`
-    );
+//     const counter = await updateDocument(
+//       "counter",
+//       { id: userType }, // Find by ID
+//       { $inc: { count: 1 } }// Fix: Move `$inc` inside `$set`
+//     );
 
-    if(!counter){
-      const counterCre = await insertNewDocument("counter",{
-      id: userType
+//     if(!counter){
+//       const counterCre = await insertNewDocument("counter",{
+//       id: userType
 
        
-    }
-    );
-    const counter = await updateDocument(
-      "counter",
-      { id: counterCre.userType }, // Find by ID
-      { $inc: { count: 1 } }// Fix: Move `$inc` inside `$set`
-    );
-     }
- // Step 1: Increment the counter
+//     }
+//     );
+//     const counter = await updateDocument(
+//       "counter",
+//       { id: counterCre.userType }, // Find by ID
+//       { $inc: { count: 1 } }// Fix: Move `$inc` inside `$set`
+//     );
+//      }
+//  // Step 1: Increment the counter
 
 
-console.log(counter,"counter");
+// console.log(counter,"counter");
 
 
     const user = await insertNewDocument("user", {
       ...req.body,
      password:req.body.password, 
-     totalPro: counter.count
+     totalPro: userCount[0].activeProUsers + 1
       
     });
  
@@ -176,7 +204,7 @@ console.log(counter,"counter");
       expiresIn: JWT_EXPIRES_IN,
     });
     req.userId = user._id;
-  //  await sendOTPVerificationEmail({email,userType})
+   await sendOTPVerificationEmail({email,userType})
     await session.commitTransaction();
     session.endSession();
 
