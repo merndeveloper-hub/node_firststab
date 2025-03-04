@@ -19,7 +19,7 @@ const verifyOTP = async (req, res) => {
       if (UserOTPVerificationRecords.length <= 0) {
         // no record found
         throw new Error(
-          "Account record doesnot exist or has been verified already. Please sign up or login"
+          "Account record doesn't exist or has been verified already. Please sign up or login"
         );
       } else {
         // user otp record exists

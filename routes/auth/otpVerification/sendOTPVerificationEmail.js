@@ -8,13 +8,13 @@ const sendOTPVerificationEmail = async (req, res) => {
   console.log(req,"req");
   
   try {
-    const {  userEmail } = req.body;
-    console.log(userEmail, "email");
-    const user = await findOneAndSelect("user", { userEmail });
+    const { email,userType } = req;
+  
+    const user = await findOneAndSelect("user", { email,userType });
 
     console.log(user, "user");
 
-    if (!userEmail) {
+    if (!user) {
       return res.status(400).send({ status: 400, message: "Invalid Email" });
     }
 
@@ -30,29 +30,32 @@ const sendOTPVerificationEmail = async (req, res) => {
     console.log(hashedOTP, "hashedOTP");
 
     const otpRes = await insertNewDocument("userOTP", {
-      userEmail: userEmail,
+      userEmail: email,
+      userType:userType,
       otp: hashedOTP,
       createdAt: Date.now(),
       expiresAt: Date.now() + 3600000,
     });
+  console.log(otpRes,"otpRes");
   
     await send_email(
-      "otptemplate",
+      "signuptemplate",
       {
         otp: otp,
       },
       "owaisy028@gmail.com",
       "Verify Your Email",
-      userEmail
+      email
     );
+console.log("finalres");
 
-    res.status(200).json({
-      status: "Pending",
-      message: "Verification otp email sent",
-      data: {
-        userEmail: userEmail,
-      },
-    });
+  // return res.status(200).json({
+  //     status: "Pending",
+  //     message: "Verification otp email sent",
+  //     data: {
+  //       userEmail: email,
+  //     },
+  //   });
   } catch (error) {
     res.status(500).json({
       status: "Failed",

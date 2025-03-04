@@ -13,31 +13,39 @@ const userSchema = new mongoose.Schema(
       type: schemaType.TypeString,
       unique: true,
     },
-    dateOfBirth: {
-      type: schemaType.TypeString,
-    },
-    ssn_Number: {
-      type: schemaType.TypeString,
-    },
+    // dateOfBirth: {
+    //   type: schemaType.TypeString,
+    // },
+    // ssn_Number: {
+    //   type: schemaType.TypeString,
+    // },
     mobile: {
       type: schemaType.TypeString,
-
       unique: true,
     },
-    serviceType: {
-      type: [String], // Array of strings
-      enum: ["video", "message", "remote", "in_personal"], // Allowed values
-      default: undefined,
-    },
+    // serviceType: {
+    //   type: [String], // Array of strings
+    //   enum: ["video", "message", "remote", "in_personal"], // Allowed values
+    //   default: undefined,
+    // },
 
     password: {
       type: schemaType.TypeString,
     },
-
-    type: {
+    city: {
       type: schemaType.TypeString,
-      ref: "userTypes",
+    }, zipCode: {
+      type: schemaType.TypeString,
     },
+    totalPro: {
+      type: schemaType.TypeNumber,
+      require:true,
+      default:0
+    },
+    // type: {
+    //   type: schemaType.TypeString,
+    //   ref: "userTypes",
+    // },
 
     userType: { type: schemaType.TypeString, enum: ["user", "pro"] }, // Identifies the user type
 

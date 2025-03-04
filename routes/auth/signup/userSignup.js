@@ -4,28 +4,24 @@ import {
   insertNewDocument,
   findOneAndSelect,
 } from "../../../helpers/index.js";
-import { SECRET } from "../../../config/index.js";
-
+import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
+import sendOTPVerificationEmail from "../otpVerification/sendOTPVerificationEmail.js";
 
 const schema = Joi.object({
   first_Name: Joi.string().min(3).required(),
   last_Name: Joi.string().min(3).required(),
   email: Joi.string()
-  .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
-  .pattern(
-    new RegExp(
-      "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-    )
-  ) // Enforces common email rules
-  .required()
-  .messages({
-    "string.email": "Invalid email format.",
-    "any.required": "Email is required.",
-    "string.pattern.base": "Invalid email structure.",
-  }),
+    .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
+    .pattern(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) // Enforces common email rules
+    .required()
+    .messages({
+      "string.email": "Invalid email format",
+      "any.required": "Email is required",
+      "string.pattern.base": "Invalid email structure",
+    }),
   mobile: Joi.string()
     .pattern(new RegExp("^\\+?[0-9]{8,15}$"))
     .required()
@@ -47,8 +43,7 @@ const schema = Joi.object({
     }),
   confirm_password: Joi.string().required().valid(Joi.ref("password")),
   status: Joi.string(),
-  type: Joi.string().required(),
-  userType:Joi.string().required(),
+  userType: Joi.string().required(),
 });
 
 const userSignup = async (req, res) => {
@@ -65,7 +60,16 @@ const userSignup = async (req, res) => {
         .json({ success: false, message: error.details[0].message });
     }
 
-    const { password, type, email, mobile,status,userType,first_Name,last_Name } = req.body;
+    const {
+      password,
+      
+      email,
+      mobile,
+      status,
+      userType,
+      first_Name,
+      last_Name,
+    } = req.body;
 
     const emailExist = await findOneAndSelect("user", { email });
     if (emailExist) {
@@ -79,34 +83,39 @@ const userSignup = async (req, res) => {
         .status(400)
         .send({ status: 400, message: "Mobile number already exists" });
     }
-    const user_type = await findOne("userType", { type });
+    // const user_type = await findOne("userType", { type });
 
-    if (!user_type) {
-      return res
-        .status(404)
-        .send({ status: 404, message: "No User Type Found" });
-    }
+    // if (!user_type) {
+    //   return res
+    //     .status(404)
+    //     .send({ status: 404, message: "No User Type Found" });
+    // }
 
     req.body.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     const user = await insertNewDocument("user", {
       //...req.body,
-      password:req.body.password, email, mobile,status,userType,first_Name,last_Name,
-      type: user_type._id,
+      password: req.body.password,
+      email,
+      mobile,
+      status,
+      userType,
+      first_Name,
+      last_Name,
+     // type: user_type._id,
     });
 
+    console.log(user, "user");
 
-    console.log(user,"user");
-  
     const token = jwt.sign({ id: user._id }, SECRET, {
-      expiresIn: "24h",
+      expiresIn: JWT_EXPIRES_IN,
     });
     req.userId = user._id;
-
+    await sendOTPVerificationEmail({email,userType})
     await session.commitTransaction();
     session.endSession();
 
-    return res.status(200).send({ status: 200, user, token });
+    return res.status(200).send({ status: 200, data:{user, token} });
   } catch (e) {
     await session.abortTransaction();
     session.endSession();

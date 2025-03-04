@@ -4,8 +4,8 @@ import mongoose  from "./config/db/index.js";
 import morgan  from "morgan";
 import cors  from "cors";
 import routes  from "./routes/index.js";
+import {PORT} from './config/index.js'
 const app = express();
-
 
 //Socket
 import http from 'http';
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 // * Api routes
 app.use("/api/v1",routes);
 
- //app.use(errorMiddleware);
+ app.use(errorMiddleware);
 
 app.get("/", async (req, res) => {
  // res.send("check");
@@ -85,10 +85,12 @@ app.use("*",(req,res) => {
 });
 
 
-let PORT = process.env.PORT | 5000
+console.log(PORT ,"process.env.PORT ");
 
-server.listen(PORT,() => {
+let port = process.env.PORT | 5000
+
+server.listen(port,() => {
  logger.info("Server is running on port 3000");
-  console.log(`Server is running on PORT http://localhost:${PORT}`);
+  console.log(`Server is running on PORT http://localhost:${port}`);
   
 })

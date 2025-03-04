@@ -21,7 +21,7 @@ import express from "express";
 // const allUsers = require("./allUsers");
 // const swapoffers = require("./swapoffers");
 // const dhcontractCollection = require("./dhcontractcollection");
-// const removeListing = require("./removeListing");
+ import business from "./business/index.js";
 
 const router = express.Router();
 
@@ -30,7 +30,7 @@ const router = express.Router();
 // router.use("/search", search);
 // router.use("/web3", web3);
 // router.use("/nft", nft);
-// router.use("/history", history);
+ router.use("/business", business);
  router.use("/category", category);
 // router.use("/bid", bid);
 // router.use("/sell", sell);

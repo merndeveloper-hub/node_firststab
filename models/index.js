@@ -8,6 +8,10 @@ import userOTP from "./otpVerification/index.js";
 import category from "./categorie/index.js";
 import subCategory from "./subCategorie/index.js";
 import subSubCategory from "./subSubCategorie/index.js";
+import counter from "./counter/index.js";
+import userCategory from "./proCategorie/index.js";
+import proCategory from "./proCategorie/index.js";
+import proBusin from "./proBusiness/index.js";
 
  const db = {};
 
@@ -27,6 +31,9 @@ db.user = user
  db.category=category
  db.subCategory=subCategory
  db.subSubCategory=subSubCategory
+ db.counter=counter
+ db.proCategory=proCategory
+ db.proBusin=proBusin
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

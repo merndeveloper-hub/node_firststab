@@ -22,5 +22,6 @@ export const api_secret = process.env.api_secret;
 export const ARCJET_ENV = process.env.ARCJET_ENV;
 export const ARCJET_KEY = process.env.ARCJET_KEY;
 export const NODE_ENV = process.env.NODE_ENV;
+export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
 
 

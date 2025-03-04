@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { SECRET } from "../../../config/index.js";
+import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 import {
   findOneAndSelect,
   findOne,
@@ -169,13 +169,13 @@ const loginUser = async (req, res) => {
       );
    
       var token = jwt.sign({ id: user._id }, SECRET, {
-        expiresIn: "24h",
+        expiresIn: JWT_EXPIRES_IN,
       });
       req.userId = user._id;
      
   
       
-  return res.status(200).send({ status: 200, user, token, });
+  return res.status(200).send({ status: 200, data:{user, token} });
 
 
     } else {

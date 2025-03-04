@@ -1,4 +1,4 @@
-const { findOne } = require("../../helpers");
+const { findOne } = require("../../../helpers");
 
 const getMetaData = async (req, res) => {
   try {

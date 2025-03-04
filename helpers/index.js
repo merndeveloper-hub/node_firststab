@@ -19,10 +19,25 @@ const insertNewDocument = async (modelDb, storeObj) => {
   return await data.save();
 };
 
-const updateDocument = async (modelDb, updateQuery, setQuery) =>
-  await Models[modelDb]
-    .findOneAndUpdate(updateQuery, { $set: setQuery }, { new: true })
+// const updateDocument = async (modelDb, updateQuery, setQuery) =>
+//   await Models[modelDb]
+//     .findOneAndUpdate(updateQuery, { $set: setQuery }, { new: true })
+//     .lean();
+
+const updateDocument = async (modelDb, updateQuery, setQuery) => {
+  // If `setQuery` contains `$inc`, don't wrap it inside `$set`
+  let updateOperation = {};
+
+  if (setQuery.$inc) {
+    updateOperation = setQuery;
+  } else {
+    updateOperation = { $set: setQuery };
+  }
+
+  return await Models[modelDb]
+    .findOneAndUpdate(updateQuery, updateOperation, { new: true })
     .lean();
+};
 
 const updateDocuments = async (modelDb, updateQuery, setQuery) =>
   await Models[modelDb]

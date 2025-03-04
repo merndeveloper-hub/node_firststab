@@ -2,7 +2,9 @@ import express from "express";
 // const { adminVerification } = require("../middleware");
 import userType from "./userType/index.js";
  import auth from "./auth/index.js";
-//import user from "./user/index.js";
+import user from "./user/index.js";
+import pro from "./user copy/index.js";
+
 // const token = require("./check-token");
  import admin from "./admin/index.js";
 // const metadata = require("./nft-metadata");
@@ -17,7 +19,9 @@ const router = express.Router();
 // AUTH Routes * /api/auth/*
 router.use("/userType", userType);
 router.use("/auth", auth);
-//router.use("/user", user);
+router.use("/user", user);
+router.use("/pro", pro);
+
 // router.use("/token", token);
 // router.use("/admin", adminVerification, admin);
 router.use("/admin",  admin); //token add krna hian 
