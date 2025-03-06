@@ -18,7 +18,7 @@ const deleteCategory = async (req, res) => {
     if (!findCategory) {
       return res.status(404).send({ status: 404, message: "No category found" });
     }
-    const category = await deleteDocument("category", {
+    const category = await deleteDocument("proCategory", {
       _id: id,
     });
 

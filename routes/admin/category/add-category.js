@@ -43,7 +43,8 @@ const addCategory = async (req, res) => {
        
       const category_Image = await cloudinary.uploader.upload(
         req?.files?.image?.path,
-        { quality: 20 }
+        { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif'] }
+        
       );
 
       req.body.image = category_Image.url;
@@ -61,7 +62,7 @@ const addCategory = async (req, res) => {
     //if (req?.files?.categoryIcon?.path) {
       const category_Icon = await cloudinary.uploader.upload(
         req?.files?.icon?.path,
-        { quality: 20 }
+        { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png', 'jfif'] }
       );
     
       req.body.icon = category_Icon.url;

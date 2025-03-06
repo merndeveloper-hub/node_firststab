@@ -10,7 +10,7 @@ const multipartMiddleware = multipart();
 
 const router = express.Router();
 
-router.get("/", getAllCategories);
+router.get("/list", getAllCategories);
 router.post("/add", addCategory);
 // router.put("/:id",multipartMiddleware, updateCategory);
  router.delete("/:id", deleteCategory);

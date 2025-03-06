@@ -195,7 +195,7 @@ const proSignup = async (req, res) => {
     const user = await insertNewDocument("user", {
       ...req.body,
      password:req.body.password, 
-     totalPro: userCount[0].activeProUsers + 1
+     totalPro: userCount[0]? userCount[0]?.activeProUsers + 1: 1
       
     });
  
