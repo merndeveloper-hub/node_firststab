@@ -12,19 +12,19 @@ const getAllCategories = async (req, res) => {
 
   try {
     const categories = await getAggregate("category", [
-      {
-        $lookup: {
-          from: "subcategories",
-          let: { categoryId: "$_id" },
-          pipeline: [
-            { $match: { $expr: { $eq: ["$categoryId", "$$categoryId"] } } },
-            // { $sort: { _id: 1 } }, // Sort subcategories (optional)
-            // { $skip: skip }, // Skip records for pagination
-            // { $limit: limit } // Limit to 5 per page
-          ],
-          as: "subCategory",
-        },
-      },
+      // {
+      //   $lookup: {
+      //     from: "subcategories",
+      //     let: { categoryId: "$_id" },
+      //     pipeline: [
+      //       { $match: { $expr: { $eq: ["$categoryId", "$$categoryId"] } } },
+      //       // { $sort: { _id: 1 } }, // Sort subcategories (optional)
+      //       // { $skip: skip }, // Skip records for pagination
+      //       // { $limit: limit } // Limit to 5 per page
+      //     ],
+      //     as: "subCategory",
+      //   },
+      // },
       { $sort: { _id: 1 } }, // Sort categories
     ]);
     console.log(categories,"categories");
