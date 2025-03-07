@@ -8,7 +8,7 @@ import tokenVerification from "../../../middleware/token-verification/index.js";
 const router = express.Router();
 
 router.post(
-  "/add",tokenVerification,
+  "/add",
   createbusiness
 );
 //router.get("/:id", getMetaData);

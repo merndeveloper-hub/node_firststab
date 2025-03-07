@@ -9,7 +9,7 @@ const multipartMiddleware = multipart();
 const router = express.Router();
 
 router.put(
-  "/update/:id",tokenVerification,multipartMiddleware,
+  "/update/:id",multipartMiddleware,
   updateProfile
 );
 //router.get("/:id", getMetaData);

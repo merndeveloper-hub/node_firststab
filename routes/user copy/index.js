@@ -30,7 +30,7 @@ const router = express.Router();
 // router.use("/follow", tokenVerification, follow);
 // router.use("/search", search);
 // router.use("/web3", web3);
-router.use("/profile", updateProfile);
+router.use("/profile", updateProfile); // after login check the token
  router.use("/business", business);
  router.use("/category", category);
 // router.use("/bid", bid);
