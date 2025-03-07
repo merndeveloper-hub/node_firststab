@@ -5,7 +5,7 @@ import userType from "./userType/index.js";
 import user from "./user/index.js";
 import pro from "./user copy/index.js";
 
-// const token = require("./check-token");
+ import refresh_token from "./check-token/index.js";
  import admin from "./admin/index.js";
 import getSterling from "../lib/sterling/index.js";
 // const metadata = require("./nft-metadata");
@@ -23,7 +23,7 @@ router.use("/auth", auth);
 router.use("/user", user);
 router.use("/pro", pro);
 
-// router.use("/token", token);
+ router.use("/refresh_token", refresh_token);
 // router.use("/admin", adminVerification, admin);
 router.use("/admin",  admin); //token add krna hian 
 router.use("/sterling",getSterling)

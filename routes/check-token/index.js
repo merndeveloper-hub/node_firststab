@@ -1,8 +1,8 @@
-const express = require("express");
-const verifyToken = require("./verify-token");
+import express from "express";
+import verifyToken from "./verify-token.js";
 
 const router = express.Router();
 
-router.get("/verify", verifyToken);
+router.post("/verify", verifyToken);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
+import { JWT_EXPIRES_IN, JWT_EXPIRES_IN_REFRESH_TOKEN, REFRESH_TOKEN_SECRET, SECRET } from "../../../config/index.js";
 import {
   findOneAndSelect,
   findOne,
@@ -171,11 +171,21 @@ const loginUser = async (req, res) => {
       var token = jwt.sign({ id: user._id }, SECRET, {
         expiresIn: JWT_EXPIRES_IN,
       });
+      var refresh_token = jwt.sign({ id: user._id }, REFRESH_TOKEN_SECRET, {
+        expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
+      });
+
+      const inserttoken = await insertNewDocument("token", {
+        user_id: user._id,
+        token:refresh_token,
+        type:"refresh"
+      });
       req.userId = user._id;
      
-  
+  //res.cookie("refreshToken", refresh_token, { httpOnly: true, secure: true, sameSite: "Strict" });
+
       
-  return res.status(200).send({ status: 200, data:{user, token} });
+  return res.status(200).send({ status: 200, data:{user, token,refresh_token} });
 
 
     } else {

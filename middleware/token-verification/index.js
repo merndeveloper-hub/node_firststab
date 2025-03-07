@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import  SECRET  from "../../config/index.js";
-import  findOne from "../../helpers/index.js";
+import  {SECRET}  from "../../config/index.js";
+import  {findOne} from "../../helpers/index.js";
 
 const tokenVerification = (req, res, next) => {
   try {
@@ -11,6 +11,8 @@ const tokenVerification = (req, res, next) => {
         .send({ status: 404, message: "No token provided!" });
     }
     jwt.verify(token, SECRET, async (err, decoded) => {
+      console.log(decoded,"decoded");
+      
       if (err) {
         console.log(err);
         return res
@@ -21,6 +23,8 @@ const tokenVerification = (req, res, next) => {
       // 	return res.status(400).send({ status: 400, message: "Upgrade your token" });
       // }
       const isUserExist = await findOne("user", { _id: decoded.id });
+      console.log(isUserExist,"isuer");
+      
       if (!isUserExist) {
         return res.status(404).send({
           status: 404,

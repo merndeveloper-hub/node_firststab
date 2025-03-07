@@ -11,6 +11,7 @@ import sendOTP from "./otpVerification/sendOTPVerificationEmail.js";
 // const addWalletAddress = require("./signup/add-wallet-address");
 import userSignup from "./signup/userSignup.js";
 import proSignup from "./signup/proSignup.js";
+import logout from "./logout/index.js";
 const router = express.Router();
 
 // User
@@ -22,6 +23,7 @@ router.post("/register/user", userSignup);
 router.post("/register/pro", proSignup);
 
 router.post("/userlogin", loginUser);
+router.delete("/logout/:id",logout)
 // router.get("/register/metamask/:username", tokenVerification, addWalletAddress);
 
 // Admin

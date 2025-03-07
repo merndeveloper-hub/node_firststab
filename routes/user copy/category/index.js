@@ -6,17 +6,18 @@ import deleteCategory from "./delete-blog.js";
 import getSingleCategoryCount from "./categorieCount.js";
 
 import multipart from "connect-multiparty";
+import tokenVerification from "../../../middleware/token-verification/index.js";
 const multipartMiddleware = multipart();
 
 const router = express.Router();
 
-router.get("/list", getAllCategories);
-router.get("/count/:id", getSingleCategoryCount);
+router.get("/list",tokenVerification, getAllCategories);
+router.get("/count/:id",tokenVerification, getSingleCategoryCount);
 
-router.post("/add", addCategory);
+router.post("/add",tokenVerification, addCategory);
 // router.put("/:id",multipartMiddleware, updateCategory);
- router.delete("/:id", deleteCategory);
+ router.delete("/:id",tokenVerification, deleteCategory);
 // Get Single Blog
-router.get("/single/:id", getSingleCategory);
+router.get("/single/:id",tokenVerification, getSingleCategory);
 
 export default router;

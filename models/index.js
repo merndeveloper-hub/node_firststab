@@ -12,6 +12,7 @@ import counter from "./counter/index.js";
 import userCategory from "./proCategorie/index.js";
 import proCategory from "./proCategorie/index.js";
 import proBusin from "./proBusiness/index.js";
+import token from "./token/index.js";
 
  const db = {};
 
@@ -34,6 +35,7 @@ db.user = user
  db.counter=counter
  db.proCategory=proCategory
  db.proBusin=proBusin
+ db.token=token
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

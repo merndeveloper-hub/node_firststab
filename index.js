@@ -11,7 +11,7 @@ const app = express();
 import http from 'http';
 import { Server } from "socket.io";
 import logger  from './logger/index.js' ;
-import  arcjetMiddleware  from'./middleware/arcjet/index.js';
+//import  arcjetMiddleware  from'./middleware/arcjet/index.js';
 import  errorMiddleware   from './middleware/error-middleware/index.js';
 
 
@@ -46,7 +46,7 @@ app.use(
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(morgan("short"));
-app.use(arcjetMiddleware);
+//app.use(arcjetMiddleware);
 app.set("trust proxy", true);
 
 app.use((req, res, next) => {
@@ -62,12 +62,12 @@ app.use("/api/v1",routes);
 
 app.get("/", async (req, res) => {
  // res.send("check");
- const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-console.log('Client IP:', ip);
-  logger.info("get API")
-  logger.info(`Incoming Request: ${req.method} ${req.url}`);
-  return res.status(200).json({ status: 200, message: "FirstStab" });
-});
+//  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+// console.log('Client IP:', ip);
+//   logger.info("get API")
+//   logger.info(`Incoming Request: ${req.method} ${req.url}`);
+   return res.status(200).json({ status: 200, message: "FirstStab" });
+ });
 
 io.on("connection", (socket) => {
   //when connect
