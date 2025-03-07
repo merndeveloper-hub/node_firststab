@@ -13,6 +13,38 @@ const userSchema = new mongoose.Schema(
       type: schemaType.TypeString,
       unique: true,
     },
+    profile: {
+      type: schemaType.TypeString,
+  
+    },
+    video: {
+      type: schemaType.TypeString,
+  
+    },
+    address_Type: {
+      type: schemaType.TypeString,
+  
+    },
+    address_line1: {
+      type: schemaType.TypeString,
+  
+    },
+    address_line2: {
+      type: schemaType.TypeString,
+  
+    },
+    state: {
+      type: schemaType.TypeString,
+  
+    },
+    date: {
+      type: schemaType.TypeString,
+  
+    },
+    time: {
+      type: schemaType.TypeString,
+  
+    },
     // dateOfBirth: {
     //   type: schemaType.TypeString,
     // },

@@ -7,6 +7,7 @@ import pro from "./user copy/index.js";
 
 // const token = require("./check-token");
  import admin from "./admin/index.js";
+import getSterling from "../lib/sterling/index.js";
 // const metadata = require("./nft-metadata");
 // const launchpadMetadata = require("./launchpad-metadata");
 
@@ -25,6 +26,7 @@ router.use("/pro", pro);
 // router.use("/token", token);
 // router.use("/admin", adminVerification, admin);
 router.use("/admin",  admin); //token add krna hian 
+router.use("/sterling",getSterling)
 // router.use("/nft-metadata", metadata);
 // router.use("/launchpad-metadata",launchpadMetadata);
 // router.use("/moralis", moralis);

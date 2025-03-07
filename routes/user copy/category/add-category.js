@@ -8,8 +8,11 @@ const schema = Joi.object({
         subCategories: Joi.array().items(
           Joi.object({
             id: Joi.string().hex().length(24).required(),
-            isRemote: Joi.boolean().required(),
-            isChat: Joi.boolean().required(),
+            isRemote: Joi.boolean(),
+            isChat: Joi.boolean(),
+            isVirtual: Joi.boolean(),
+            isInPerson: Joi.boolean(),
+
           })
         ),
       })

@@ -8,7 +8,7 @@ const TypeObjectId = mongoose.Schema.Types.ObjectId;
 const TypeDecimal = mongoose.Schema.Types.Decimal128;
 const TypeDate = mongoose.Schema.Types.Date;
 
-const ObjectID = mongoose.Types.ObjectId;
+const ObjectID = mongoose.Schema.Types.ObjectId;
 
 export default  {
   TypeString,
