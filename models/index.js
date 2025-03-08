@@ -13,6 +13,9 @@ import userCategory from "./proCategorie/index.js";
 import proCategory from "./proCategorie/index.js";
 import proBusin from "./proBusiness/index.js";
 import token from "./token/index.js";
+import content from "./content/index.js";
+import faqCategory from "./faqCategorie/index.js";
+import faqQuestion from "./faqQuestion/index.js";
 
  const db = {};
 
@@ -36,6 +39,9 @@ db.user = user
  db.proCategory=proCategory
  db.proBusin=proBusin
  db.token=token
+ db.content=content
+ db.faqCategory=faqCategory
+ db.faqQuestion=faqQuestion
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

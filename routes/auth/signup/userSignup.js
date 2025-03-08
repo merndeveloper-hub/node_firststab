@@ -9,7 +9,7 @@ import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import sendOTPVerificationEmail from "../otpVerification/sendOTPVerificationEmail.js";
+import sendOTPVerificationEmail from "../otpVerification/sendOTPSignup.js";
 
 const schema = Joi.object({
   first_Name: Joi.string().min(3).required(),

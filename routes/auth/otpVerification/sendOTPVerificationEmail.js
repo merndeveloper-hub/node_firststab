@@ -1,16 +1,16 @@
 import userOTP from "../../../models/index.js";
 import bcrypt from "bcryptjs";
 import send_email from "../../../lib/node-mailer/index.js";
-import { insertNewDocument, findOneAndSelect } from "../../../helpers/index.js";
+import { insertNewDocument, findOneAndSelect, findOne } from "../../../helpers/index.js";
 
 const sendOTPVerificationEmail = async (req, res) => {
   console.log("heelo");
   console.log(req,"req");
   
   try {
-    const { email,userType } = req;
+    const { email,userType } = req.body;
   
-    const user = await findOneAndSelect("user", { email,userType });
+    const user = await findOne("user", { email,userType });
 
     console.log(user, "user");
 
@@ -49,13 +49,13 @@ const sendOTPVerificationEmail = async (req, res) => {
     );
 console.log("finalres");
 
-  // return res.status(200).json({
-  //     status: "Pending",
-  //     message: "Verification otp email sent",
-  //     data: {
-  //       userEmail: email,
-  //     },
-  //   });
+  return res.status(200).json({
+      status: "Pending",
+      message: "Verification otp email sent",
+      data: {
+        userEmail: email,
+      },
+    });
   } catch (error) {
     res.status(500).json({
       status: "Failed",

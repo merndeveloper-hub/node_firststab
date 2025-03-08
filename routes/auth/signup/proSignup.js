@@ -11,11 +11,11 @@ import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import sendOTPVerificationEmail from "../otpVerification/sendOTPVerificationEmail.js";
+import sendOTPVerificationEmail from "../otpVerification/sendOTPSignup.js";
 
 const schema = Joi.object({
-  first_Name: Joi.string().required(),
-  last_Name: Joi.string().required(),
+  first_Name: Joi.string().min(3).required(),
+  last_Name: Joi.string().min(3).required(),
   city: Joi.string().required(),
   totalPro:Joi.number(),
   //zipCode: Joi.string().required(),
@@ -101,17 +101,18 @@ const proSignup = async (req, res) => {
   
   const session = await mongoose.startSession();
   session.startTransaction();
-
-  try {
   
-    const { error, value } = schema.validate(req.body, { abortEarly: false });
+  try {
+   
+    await schema.validateAsync(req.body);
+   // const { error, value } = schema.validate(req.body, { abortEarly: false });
 
-    if (error) {
-      console.error("Validation Error:", error);
-      return res
-        .status(400)
-        .json({ success: false, message: error.details[0].message });
-    }
+    // if (error) {
+    //   console.error("Validation Error:", error);
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: error.details[0].message });
+    // }
 
 
     const { password, city,zipCode,email, mobile,first_Name,last_Name,userType,status } = req.body;

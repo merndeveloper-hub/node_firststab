@@ -19,8 +19,10 @@ import express from "express";
 // const swap = require("./swap");
 // const userCollection = require("./userCollection");
 // const allUsers = require("./allUsers");
-// const swapoffers = require("./swapoffers");
-// const dhcontractCollection = require("./dhcontractcollection");
+ import faqCategory from "./faqCategorie/index.js";
+ import faqQuestion from "./faqQuestion/index.js";
+
+ import contentPages from "./contentPages/index.js";
  import business from "./business/index.js";
 import updateProfile from "./profile/index.js";
 
@@ -33,7 +35,10 @@ const router = express.Router();
 router.use("/profile", updateProfile); // after login check the token
  router.use("/business", business);
  router.use("/category", category);
-// router.use("/bid", bid);
+ router.use("/contentPage", contentPages);
+ router.use("/faqCategory", faqCategory);
+ router.use("/faqQuestion", faqQuestion);
+ 
 // router.use("/sell", sell);
 // router.use("/auction", auction);
 // router.use("/subscribe", subscribe);

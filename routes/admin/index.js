@@ -2,6 +2,11 @@ import express from "express";
 import category from "./category/index.js";
 import subCategory from "./subCategory/index.js";
 import subSubCategory from './subSubCategory/index.js'
+import contentPage from "./contentPages/index.js";
+import faqCategory from "./faqCategorie/index.js";
+import faqQuestion from "./faqQuestion/index.js";
+
+
 const router = express.Router();
 
 // const user = require("./user");
@@ -16,9 +21,9 @@ const router = express.Router();
 // router.use("/nft", nft);
 // router.use("/profile", profile);
 // router.use("/blog", blog);
-// router.use("/roles", roles);
-// router.use("/allowlist", allowlist);
-// router.use("/launchpad", launchpad);
+ router.use("/faqQuestion", faqQuestion);
+router.use("/faqCategory", faqCategory);
+router.use("/contentPage", contentPage);
 router.use("/category",category)
 router.use("/subcategory",subCategory)
 router.use("/subsubcategory",subSubCategory)

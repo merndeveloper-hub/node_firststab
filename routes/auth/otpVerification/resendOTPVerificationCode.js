@@ -1,4 +1,4 @@
-import sendOTPVerificationEmail from "./sendOTPVerificationEmail.js";
+import sendOTPVerificationEmail from "./sendOTPSignup.js";
 //const  UserOTPVerification  = require("../../../models/otpVerification/index.js");
 import { deleteManyDocument } from "../../../helpers/index.js";
 
