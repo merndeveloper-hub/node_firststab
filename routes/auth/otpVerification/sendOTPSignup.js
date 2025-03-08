@@ -8,7 +8,7 @@ const sendOTP = async (req, res) => {
   console.log(req,"req");
   
   try {
-    const { email,userType } = req.body;
+    const { email,userType } = req;
   
     const user = await findOne("user", { email,userType });
 
