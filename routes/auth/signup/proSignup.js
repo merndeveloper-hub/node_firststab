@@ -16,16 +16,16 @@ import sendOTPVerificationEmail from "../otpVerification/sendOTPSignup.js";
 const schema = Joi.object({
   first_Name: Joi.string().min(3).required(),
   last_Name: Joi.string().min(3).required(),
-  city: Joi.string().required(),
+ // city: Joi.string().required(),
   totalPro:Joi.number(),
   //zipCode: Joi.string().required(),
-  zipCode: Joi.string()
-    .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
-    .required()
-    .messages({
-      'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
-      'any.required': 'ZIP code is required',
-    }),
+  // zipCode: Joi.string()
+  //   .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
+  //   .required()
+  //   .messages({
+  //     'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
+  //     'any.required': 'ZIP code is required',
+  //   }),
   // full_Name: Joi.string().required(),
    email: Joi.string()
    .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
@@ -61,14 +61,14 @@ const schema = Joi.object({
     }),
   confirm_password: Joi.string().required().valid(Joi.ref("password")),
   status: Joi.string(),
-  businessname: Joi.string(),
-  businessaddress: Joi.string(),
-  businessphoneNo: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
-   .messages({
-     "string.pattern.base":
-       "Mobile number must be 8-15 digits and may include a country code (e.g., +123456789).",
-     "any.required": "Mobile number is required.",
-   }),
+  // businessname: Joi.string(),
+  // businessaddress: Joi.string(),
+  // businessphoneNo: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+  //  .messages({
+  //    "string.pattern.base":
+  //      "Mobile number must be 8-15 digits and may include a country code (e.g., +123456789).",
+  //    "any.required": "Mobile number is required.",
+  //  }),
 
 
   // dateOfBirth: Joi.date()

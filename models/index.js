@@ -16,6 +16,7 @@ import token from "./token/index.js";
 import content from "./content/index.js";
 import faqCategory from "./faqCategorie/index.js";
 import faqQuestion from "./faqQuestion/index.js";
+import payment from "./payments/index.js";
 
  const db = {};
 
@@ -42,6 +43,7 @@ db.user = user
  db.content=content
  db.faqCategory=faqCategory
  db.faqQuestion=faqQuestion
+ db.payment=payment
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

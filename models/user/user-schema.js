@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
       type: schemaType.TypeString,
   
     },
+    countryCode: {
+      type: schemaType.TypeString,
+  
+    },
     video: {
       type: schemaType.TypeString,
   

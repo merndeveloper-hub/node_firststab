@@ -3,7 +3,7 @@ import express from "express";
 import userType from "./userType/index.js";
  import auth from "./auth/index.js";
 import user from "./user/index.js";
-import pro from "./user copy/index.js";
+import pro from "./pro/index.js";
 
  import refresh_token from "./check-token/index.js";
  import admin from "./admin/index.js";

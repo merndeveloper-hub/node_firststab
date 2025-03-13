@@ -25,6 +25,7 @@ import express from "express";
  import contentPages from "./contentPages/index.js";
  import business from "./business/index.js";
 import updateProfile from "./profile/index.js";
+import stripePayment from "./payment/index.js";
 
 const router = express.Router();
 
@@ -38,8 +39,7 @@ router.use("/profile", updateProfile); // after login check the token
  router.use("/contentPage", contentPages);
  router.use("/faqCategory", faqCategory);
  router.use("/faqQuestion", faqQuestion);
- 
-// router.use("/sell", sell);
+  router.use("/payment", stripePayment);
 // router.use("/auction", auction);
 // router.use("/subscribe", subscribe);
 // router.use("/pandoras", pandoras);

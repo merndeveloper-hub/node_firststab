@@ -1,5 +1,13 @@
 import Joi from "joi";
 import { updateDocument, findOne } from "../../../helpers/index.js";
+import { v2 as cloudinary } from "cloudinary";
+//import { cloudinary } from "../../../lib/index.js";
+cloudinary.config({
+  cloud_name:'dwebxmktr',
+  api_key: '988681166781262',
+  api_secret: 'f4gUgqo7htBtD3eOGhfirdKd8kA',
+});
+
 
 const schema = Joi.object({
   name: Joi.string(),
@@ -26,12 +34,32 @@ const updateCategory = async (req, res) => {
     if (!findCategory) {
       return res.status(404).send({ status: 404, message: "No Category found" });
     }
+
+  const category_Image = await cloudinary.uploader.upload(
+        req?.files?.image?.path,
+        { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif'] }
+        
+      );
+
+      req.body.image = category_Image.url;
+      console.log(category_Image,"category_Image");
+
+ const category_Icon = await cloudinary.uploader.upload(
+        req?.files?.icon?.path,
+        { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png', 'jfif'] }
+      );
+    
+      req.body.icon = category_Icon.url;
+      console.log(category_Icon,"category_Image");
+
     const category = await updateDocument(
       "category",
       {
         _id: id,
       },
       {
+        image: req?.body?.image,
+        icon:req?.body?.icon,
         ...req.body,
       }
     );

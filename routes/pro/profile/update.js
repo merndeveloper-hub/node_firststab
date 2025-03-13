@@ -11,15 +11,32 @@ cloudinary.config({
 
 const schema = Joi.object({
 
-   profile: Joi.string(),
+profile: Joi.string(),
 video: Joi.string(),
 address_Type: Joi.string(),
 address_line1: Joi.string(),
 address_line2: Joi.string(),
-state: Joi.string(),
-date : Joi.string(),
-time: Joi.string(),
+state: Joi.string().required(),
+countryCode: Joi.string().required(),
+// date : Joi.string(),
+// time: Joi.string(),
+city: Joi.string().required(),
+zipCode: Joi.string()
+    .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
+    .required()
+    .messages({
+      'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
+      'any.required': 'ZIP code is required',
+    }),
+mobile: Joi.string()
+        .pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+        .messages({
+          "string.pattern.base":
+            "Mobile number must be 8-15 digits and may include a country code (e.g., +123456789).",
+          "any.required": "Mobile number is required.",
+        }),
 });
+
 const schemaForId = Joi.object({
   id: Joi.string().required(),
 });

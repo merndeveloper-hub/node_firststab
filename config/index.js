@@ -25,5 +25,6 @@ export const NODE_ENV = process.env.NODE_ENV;
 export const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
 export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET
 export const JWT_EXPIRES_IN_REFRESH_TOKEN = process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
+export const STERLING_API_URL = process.env.STERLING_API_URL
 
 

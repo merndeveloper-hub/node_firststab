@@ -24,3 +24,7 @@ sub categoreis with select type
 
 
 }
+
+Regitstration remove city and zipcode
+update register 
+stripe
