@@ -12,12 +12,30 @@ const PaymentSchema = new mongoose.Schema(
       type: SchemaType.TypeNumber,
       required: true
     },
+    cardNumber: {
+      type: SchemaType.TypeString,
+      required: true
+    },
+  
+    cardExpiryDate: {
+      type: SchemaType.TypeString,
+      required: true
+    },
+    cardCVC: {
+      type: SchemaType.TypeString,
+      required: true
+    },
+    holdingName: {
+      type: SchemaType.TypeString
+     
+    },
     currency: {
       type: SchemaType.TypeString,
       default:"usd"
     //  required: true,
      // index: true
     },
+
     paymentMethod: { type: SchemaType.TypeString, enum: ["stripe", "paypal"], required: true },
     transactionId: { type: SchemaType.TypeString, required: true },
     status: { type: SchemaType.TypeString, enum: ["pending", "success", "failed"], default: "pending" },

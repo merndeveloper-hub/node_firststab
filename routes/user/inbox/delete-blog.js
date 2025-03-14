@@ -14,11 +14,11 @@ const deleteCategory = async (req, res) => {
   try {
     await schema.validateAsync(req.params);
     const { id } = req.params;
-    const findCategory = await findOne("proCategory", { _id: id });
+    const findCategory = await findOne("category", { _id: id });
     if (!findCategory) {
       return res.status(404).send({ status: 404, message: "No category found" });
     }
-    const category = await deleteDocument("proCategory", {
+    const category = await deleteDocument("category", {
       _id: id,
     });
 

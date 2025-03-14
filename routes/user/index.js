@@ -21,7 +21,8 @@ import express from "express";
 // const allUsers = require("./allUsers");
 // const swapoffers = require("./swapoffers");
 // const dhcontractCollection = require("./dhcontractcollection");
-// const removeListing = require("./removeListing");
+import info from "./info/index.js";
+import home from "./home/index.js";
 
 const router = express.Router();
 
@@ -32,8 +33,8 @@ const router = express.Router();
 // router.use("/nft", nft);
 // router.use("/history", history);
  router.use("/category", category);
-// router.use("/bid", bid);
-// router.use("/sell", sell);
+ router.use("/info", info);
+ router.use("/home", home);
 // router.use("/auction", auction);
 // router.use("/subscribe", subscribe);
 // router.use("/pandoras", pandoras);

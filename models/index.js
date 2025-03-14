@@ -17,6 +17,9 @@ import content from "./content/index.js";
 import faqCategory from "./faqCategorie/index.js";
 import faqQuestion from "./faqQuestion/index.js";
 import payment from "./payments/index.js";
+import contactUs from "./contactUs/index.js";
+import userBookServ from "./userCategorie/index.js";
+import booking from "./booking/index.js";
 
  const db = {};
 
@@ -44,6 +47,9 @@ db.user = user
  db.faqCategory=faqCategory
  db.faqQuestion=faqQuestion
  db.payment=payment
+ db.contactUs=contactUs
+ db.userBookServ=userBookServ
+ db.booking=booking
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

@@ -23,14 +23,14 @@ const addCategory = async (req, res) => {
   try {
     console.log(req.body,"body");
     
-    const { error, value } = schema.validate(req.body, { abortEarly: false });
+    // const { error, value } = schema.validate(req.body, { abortEarly: false });
 
-    if (error) {
-      console.error("Validation Error:", error);
-      return res
-        .status(400)
-        .json({ success: false, message: error.details[0].message });
-    }
+    // if (error) {
+    //   console.error("Validation Error:", error);
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: error.details[0].message });
+    // }
 
 
   

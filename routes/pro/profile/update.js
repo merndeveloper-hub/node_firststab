@@ -16,14 +16,13 @@ video: Joi.string(),
 address_Type: Joi.string(),
 address_line1: Joi.string(),
 address_line2: Joi.string(),
-state: Joi.string().required(),
-countryCode: Joi.string().required(),
+state: Joi.string(),
+countryCode: Joi.string(),
 // date : Joi.string(),
 // time: Joi.string(),
-city: Joi.string().required(),
+city: Joi.string(),
 zipCode: Joi.string()
     .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
-    .required()
     .messages({
       'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
       'any.required': 'ZIP code is required',
@@ -50,24 +49,30 @@ const updateProfile = async (req, res) => {
     if (!findCategory) {
       return res.status(404).send({ status: 404, message: "No User found" });
     }
+if( req.body.profile){
 
-     const profile_Image = await cloudinary.uploader.upload(
-            req?.files?.profile?.path,
-            { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif'] }
-            
-          );
-    
-          req.body.profile = profile_Image.url;
+  const profile_Image = await cloudinary.uploader.upload(
+         req?.files?.profile?.path,
+         { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif'] }
+         
+       );
+ 
+       req.body.profile = profile_Image.url;
+}
 
-           const profile_Video = await cloudinary.uploader.upload(
-                  req?.files?.video?.path,
-                  {resource_type: "video", // Required for video uploads
-  // Optional: Specify allowed formats
-  allowed_formats: ["mp4", "mov", "webm"]}
-                  
-                );
-          
-                req.body.video = profile_Video.url;
+
+if(req.body.video){
+  const profile_Video = await cloudinary.uploader.upload(
+         req?.files?.video?.path,
+         {resource_type: "video", // Required for video uploads
+// Optional: Specify allowed formats
+allowed_formats: ["mp4", "mov", "webm"]}
+         
+       );
+ 
+       req.body.video = profile_Video.url;
+
+}
 
     const profile = await updateDocument(
       "user",
@@ -75,7 +80,7 @@ const updateProfile = async (req, res) => {
         _id: id,
       },
       {
-        profile: req.body.profile,
+        profile: req?.body?.profile,
         video: req?.body?.video ,
         ...req.body,
       }

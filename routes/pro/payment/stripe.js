@@ -3,8 +3,7 @@ import { findOne, insertNewDocument } from "../../../helpers/index.js";
 import Stripe from "stripe";
 
 let stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-console.log(stripe,"stripe");
-console.log(process.env.STRIPE_SECRET_KEY,"key");
+
 
 
 
@@ -13,14 +12,22 @@ const validationSchema = Joi.object({
   currency: Joi.string(),
   paymentMethod: Joi.string().required(),
   userId: Joi.string().required(),
+  cardNumber: Joi.string().required(),
+  cardExpiryDate: Joi.string().required(),
+  cardCVC: Joi.string().required(),
+  holdingName: Joi.string(),
 });
+
+
+
 
 const stripePayment = async (req, res) => {
   try {
     await validationSchema.validateAsync(req.body);
     console.log(req.body);
 
-    const { userId, amount, currency } = req.body;
+    const { userId, amount, currency,cardCVC,cardExpiryDate,cardNumber} = req.body;
+console.log(cardExpiryDate,"cardExpiryDate");
 
     const findUser = await findOne('user',{_id:userId});
     if(!findUser){
@@ -30,13 +37,22 @@ const stripePayment = async (req, res) => {
       });
     }
 
+// Split the string
+const [month, year] = cardExpiryDate.split('/');
+
+// Convert YY to YYYY
+const exp_month = parseInt(month, 10); // Convert to number
+const exp_year = 2000 + parseInt(year, 10); // Convert YY to YYYY
+
+console.log(exp_month, exp_year); // Output: 9 2025
+
 let paymentMethod = await stripe.paymentMethods.create({
   type:'card',
   card:{
-    number:'4242424242424242',
-    exp_month:9,
-    exp_year:2025,
-    cvc:'314'
+    number:cardNumber,
+    exp_month,
+    exp_year,
+    cvc:cardCVC
   },
 });
 
