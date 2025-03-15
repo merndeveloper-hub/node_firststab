@@ -23,6 +23,8 @@ const addCategory = async (req, res) => {
   try {
     console.log(req.body,"body");
     
+
+    await schema.validateAsync(req.body)
     // const { error, value } = schema.validate(req.body, { abortEarly: false });
 
     // if (error) {

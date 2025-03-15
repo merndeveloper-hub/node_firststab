@@ -5,6 +5,7 @@ import schemaType from "../../types/index.js";
 const categorySchema = new mongoose.Schema({
   title: { type: schemaType.TypeString},
   pageCode: { type: schemaType.TypeString},
+  image: { type: schemaType.TypeString},
   contents: { type: schemaType.TypeString},
   status: { type: schemaType.TypeString, enum: ['Active', 'Inactive'], default: 'Active' },
   isSystemPage: { type: schemaType.TypeString, enum: ['No', 'Yes'], default: 'No' },

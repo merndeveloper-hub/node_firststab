@@ -10,6 +10,11 @@ const userBookServSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    addressId: {
+      type: schemaType.ObjectID, 
+      ref: "address"
+   
+    },
     image: {
       type: schemaType.TypeString,
      
@@ -20,7 +25,7 @@ const userBookServSchema = new mongoose.Schema(
     },
     professionalId: {
       type: schemaType.ObjectID,
-     
+      ref: "user"
     },
         categoryId: {
           type: schemaType.ObjectID, // Reference to Category

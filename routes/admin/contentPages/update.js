@@ -1,12 +1,24 @@
 import Joi from "joi";
 // const { findOne } = require("../../../helpers");
 import { findOne, updateDocument} from "../../../helpers/index.js";
+import { v2 as cloudinary } from "cloudinary";
+//import { cloudinary } from "../../../lib/index.js";
+cloudinary.config({
+  cloud_name:'dwebxmktr',
+  api_key: '988681166781262',
+  api_secret: 'f4gUgqo7htBtD3eOGhfirdKd8kA',
+});
+
+
+
+
 const schema = Joi.object({
   title: Joi.string(),
     pageCode: Joi.string(),
     isSystemPage : Joi.string(),
     status: Joi.string(),
     contents: Joi.string(),
+    image: Joi.string()
 });
 
 const updateContentPage = async (req, res) => {
@@ -21,8 +33,21 @@ const updateContentPage = async (req, res) => {
       return res.status(400).send({ status: 400, message: "No Content Page Found" });
     }
 
+    if(req.files.image){
+console.log("image");
 
-    const updateContentPage = await updateDocument("content", { _id:id }, {...req.body});
+        
+      const conetent_Image = await cloudinary.uploader.upload(
+             req?.files?.image?.path,
+             { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif','avif'] }
+             
+           );
+     
+           req.body.image = conetent_Image.url;
+         }
+console.log(req.body.image,"req.body.image");
+
+    const updateContentPage = await updateDocument("content", { _id:id }, {...req.body,image:req?.body?.image});
 
 
 console.log(updateContentPage,'updateContentPage');

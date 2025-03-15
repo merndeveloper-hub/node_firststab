@@ -20,6 +20,7 @@ import payment from "./payments/index.js";
 import contactUs from "./contactUs/index.js";
 import userBookServ from "./userCategorie/index.js";
 import booking from "./booking/index.js";
+import address from "./address/index.js";
 
  const db = {};
 
@@ -50,6 +51,7 @@ db.user = user
  db.contactUs=contactUs
  db.userBookServ=userBookServ
  db.booking=booking
+ db.address=address
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");

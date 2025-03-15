@@ -8,12 +8,15 @@ import updateContentPage from "./update.js";
 import updateContentStatus from "./updateStatus.js";
 import singleContentPage from "./getSingle.js";
 
+
+import multipart from "connect-multiparty";
+const multipartMiddleware = multipart();
 const router = express.Router();
 
-router.post("/add", addContentPage);
+router.post("/add",multipartMiddleware, addContentPage);
 router.get("/get", getContentPage);
 router.get("/get/:id", singleContentPage)
 router.put("/updatedstatus/:id", updateContentStatus);
-router.put("/update/:id", updateContentPage);
+router.put("/update/:id",multipartMiddleware, updateContentPage);
 
 export default router;

@@ -1,9 +1,19 @@
 import Joi from "joi";
 import { updateDocument, findOne, insertNewDocument } from "../../../helpers/index.js";
+import { v2 as cloudinary } from "cloudinary";
+//import { cloudinary } from "../../../lib/index.js";
+cloudinary.config({
+  cloud_name:'dwebxmktr',
+  api_key: '988681166781262',
+  api_secret: 'f4gUgqo7htBtD3eOGhfirdKd8kA',
+});
+
+
 
 const schema = Joi.object({
     title: Joi.string().required(),
     pageCode: Joi.string().required(),
+    image: Joi.string().required(),
     isSystemPage : Joi.string(),
     status: Joi.string().required(),
     contents: Joi.string().required(),
@@ -13,9 +23,20 @@ const schema = Joi.object({
 const addContentPage = async (req, res) => {
     try {
         await schema.validateAsync(req.body);
-       
+         
 
-        const addContent = await insertNewDocument("content",{...req.body});
+        if(req.body.image){
+
+        
+ const conetent_Image = await cloudinary.uploader.upload(
+        req?.files?.image?.path,
+        { quality: 20,allowed_formats: ['jpg', 'jpeg', 'png','jfif','avif'] }
+        
+      );
+
+      req.body.image = conetent_Image.url;
+    }
+        const addContent = await insertNewDocument("content",{...req.body,image:req.body.image});
 
 console.log(addContent,"addContent....");
 

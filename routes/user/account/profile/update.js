@@ -1,6 +1,7 @@
 import Joi from "joi";
-import { updateDocument, findOne } from "../../../helpers/index.js";
+import { updateDocument, findOne } from "../../../../helpers/index.js";
 import { v2 as cloudinary } from "cloudinary";
+
 //import { cloudinary } from "../../../lib/index.js";
 cloudinary.config({
   cloud_name:'dwebxmktr',
@@ -12,21 +13,16 @@ cloudinary.config({
 const schema = Joi.object({
 
 profile: Joi.string(),
-video: Joi.string(),
-address_Type: Joi.string(),
-address_line1: Joi.string(),
-//address_line2: Joi.string(),
-address_line2: Joi.string().allow('').optional(),
-state: Joi.string(),
-countryCode: Joi.string(),
-// date : Joi.string(),
-// time: Joi.string(),
-city: Joi.string(),
-zipCode: Joi.string()
-    .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
+  first_Name: Joi.string().min(3),
+  last_Name: Joi.string().min(3),
+  email: Joi.string()
+    .email({ tlds: { allow: true } }) // Ensures a valid domain with TLD (e.g., .com, .org)
+    .pattern(new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) // Enforces common email rules
+    
     .messages({
-      'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
-      'any.required': 'ZIP code is required',
+      "string.email": "Invalid email format",
+      "any.required": "Email is required",
+      "string.pattern.base": "Invalid email structure",
     }),
 mobile: Joi.string()
         .pattern(new RegExp("^\\+?[0-9]{8,15}$"))
@@ -46,7 +42,7 @@ const updateProfile = async (req, res) => {
     await schemaForId.validateAsync(req.params);
     await schema.validateAsync(req.body);
     const { id } = req.params;
-    const findCategory = await findOne("user", { _id: id });
+    const findCategory = await findOne("user", { _id: id,userType:'user' });
     if (!findCategory) {
       return res.status(404).send({ status: 404, message: "No User found" });
     }
@@ -62,18 +58,7 @@ if( req.files.profile){
 }
 
 
-if(req.files.video){
-  const profile_Video = await cloudinary.uploader.upload(
-         req?.files?.video?.path,
-         {resource_type: "video", // Required for video uploads
-// Optional: Specify allowed formats
-allowed_formats: ["mp4", "mov", "webm"]}
-         
-       );
- 
-       req.body.video = profile_Video.url;
 
-}
 
     const profile = await updateDocument(
       "user",
@@ -82,7 +67,7 @@ allowed_formats: ["mp4", "mov", "webm"]}
       },
       {
         profile: req?.body?.profile,
-        video: req?.body?.video ,
+       
         ...req.body,
       }
     );

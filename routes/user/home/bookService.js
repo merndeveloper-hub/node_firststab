@@ -5,6 +5,7 @@ import category from "../../../models/categorie/index.js";
 
 const schema = Joi.object({
   userId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
+  addressId:Joi.string().hex().length(24),
   image: Joi.string(),
   professionalId:Joi.string().hex().length(24),
   problemDesc: Joi.string().required(),
@@ -57,6 +58,19 @@ const findSubCategorie = await findOne("subCategory",{_id: req.body.subCategorie
   .status(400)
   .json({ status: 400, message: "No Sub Categorie Found"}); 
 }
+
+if(req.body.addressId){
+
+  const addressId = await findOne("address",{_id: req.body.addressId})
+    if(!addressId){
+    return res
+    .status(400)
+    .json({ status: 400, message: "No Address Found"}); 
+  }
+}
+
+
+
     const bookServ = await insertNewDocument("userBookServ", {
       ...req.body,
     
