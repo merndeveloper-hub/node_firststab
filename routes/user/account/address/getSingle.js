@@ -17,7 +17,7 @@ const {id} = req.params
       "address",
       {userId:id}
     );
-    if (!getUserAddress) {
+    if (getUserAddress.length <=0) {
       return res.status(404).send({ status: 404, message: "No data found" });
     }
     return res

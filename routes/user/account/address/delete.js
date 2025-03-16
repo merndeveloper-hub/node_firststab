@@ -9,7 +9,7 @@ import { insertNewDocument, findOne, updateDocument, deleteDocument } from "../.
 
 const deleteAddress = async (req, res) => {
   try {
- 
+ const {userId} = req.body
  
     
    
@@ -22,7 +22,8 @@ const deleteAddress = async (req, res) => {
       "address",
      
 {
-  _id:req.params.id
+  _id:req.params.id,
+  userId:userId,
 }
 
     

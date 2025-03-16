@@ -12,12 +12,8 @@ address_line2: Joi.string().allow('').optional(),
 state: Joi.string().required(),
 city: Joi.string().required(),
 userId: Joi.string().required(),
-zipCode: Joi.string().required()
-    .pattern(/^\d{5}(-\d{4})?$/) // Matches 5 digits or 5+4 format (e.g., 12345 or 12345-6789)
-    .messages({
-      'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
-      'any.required': 'ZIP code is required',
-    }),
+zipCode: Joi.string().required(),
+   
 mobile: Joi.string()
         .pattern(new RegExp("^\\+?[0-9]{8,15}$"))
         .messages({
