@@ -1,23 +1,19 @@
 import Joi from "joi";
 import { getAggregate, insertNewDocument } from "../../../helpers/index.js";
 import ObjectID from '../../../types/index.js'
+import mongoose from "mongoose";
 //import schemaType from "../../../types/index.js";
 
-// const schema = Joi.object({
-//   userId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
-//   price: Joi.number().min(0).required(),
-//   categoryId: Joi.string().hex().length(24).required(),
-//         subCategories: Joi.array().items(
-//           Joi.object({
-//             id: Joi.string().hex().length(24).required(),
-//             isRemote: Joi.boolean(),
-//             isChat: Joi.boolean(),
-//             isVirtual: Joi.boolean(),
-//             isInPerson: Joi.boolean(),
+const schema = Joi.object({
+  
+  categoryId: Joi.string().hex().length(24).required(),
+  subCategorieId: Joi.string().hex().length(24).required(),
+ // userId: Joi.string().hex().length(24).required(),
+      servieType:Joi.string()
+ 
+});
 
-//           })
-//         ),
-//       })
+      
     
 
 
@@ -25,10 +21,13 @@ const getProfessional = async (req, res) => {
   try {
     console.log(req.body,"body");
     
-
- //   await schema.validateAsync(req.body)
+//	"isRemote": true,
+//"isChat": false,
+//"isVirtual": true,
+//"isInPerson": false,
+   await schema.validateAsync(req.body)
    const {categoryId,subCategorieId,servieType} = req.body
-   console.log(categoryId,"ca");
+   
    
     // const { error, value } = schema.validate(req.body, { abortEarly: false });
 
@@ -40,13 +39,11 @@ const getProfessional = async (req, res) => {
     // }
 
 
-    const categories = await getAggregate("proCategory", [
+    const proService = await getAggregate("proCategory", [
      
-      {
-        $match: { 
-          categoryId: ObjectID(categoryId)
-        } // Match the categoryId
-      }
+      // {
+      //   $match: { categoryId: new mongoose.Types.ObjectId(categoryId) } // Match the categoryId as ObjectId
+      // },
       // {
       //   $project: {
       //     userId: 1,
@@ -60,7 +57,7 @@ const getProfessional = async (req, res) => {
       //         as: "sub",
       //         cond: {
       //           $and: [
-      //             { $eq: ["$$sub.id", subCategorieId] }, // Match subCategory ID
+      //             { $eq: ["$$sub.id", new mongoose.Types.ObjectId(subCategorieId)] }, // Match subCategory ID as ObjectId
       //             { $eq: [`$$sub.${servieType}`, true] } // Check if the given key is true
       //           ]
       //         }
@@ -71,13 +68,63 @@ const getProfessional = async (req, res) => {
       // {
       //   $match: { "subCategories.0": { $exists: true } } // Ensure at least one matching subCategory exists
       // }
+
+      {
+    $match: { 
+      categoryId: new mongoose.Types.ObjectId(categoryId) // Match categoryId
+    }
+  },
+  {
+    $project: {
+      userId: 1,
+      price: 1,
+      categoryId: 1,
+      createdAt: 1,
+      updatedAt: 1,
+      subCategories: {
+        $filter: {
+          input: "$subCategories",
+          as: "sub",
+          cond: {
+            $and: [
+              { $eq: ["$$sub.id", new mongoose.Types.ObjectId(subCategorieId)] }, // Match subCategory ID
+              { $eq: [`$$sub.${servieType}`, true] } // Check if serviceType is true
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    $match: { "subCategories.0": { $exists: true } } // Ensure at least one matching subCategory exists
+  },
+  {
+    $lookup: {
+      from: "users", // Collection where user data is stored
+      localField: "userId", // Extracted userId from the document
+      foreignField: "_id", // Matching field in the users collection
+      as: "userDetails"
+    }
+  },
+  {
+    $unwind: { path: "$userDetails", preserveNullAndEmptyArrays: true } // Flatten userDetails array
+  }
+      
     ]);
    
-console.log(categories,"categorie");
+    if(proService <= 0){
+      return res
+      .status(200)
+      .json({ status: 200, message:"No pro found to give service."});
+    }
+
+   console.log(proService,"proservi");
+   
+    
 
     return res
       .status(200)
-      .json({ status: 200, message: "Category uploaded successfully", categories});
+      .json({ status: 200, proService});
   } catch (e) {
     console.log(e,"chec");
     return res.status(500).json({ status: 500, message: e.message });

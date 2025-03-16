@@ -27,6 +27,16 @@ const userBookServSchema = new mongoose.Schema(
       type: schemaType.ObjectID,
       ref: "user"
     },
+    // serviceAssign: {
+    //   type: schemaType.TypeString,
+    //   enum: ["Professional", "Random"],
+    //   default: "Random",
+    // },
+    // serviceStatus: {
+    //       type: schemaType.TypeString,
+    //       enum: ["Pending", "Cancel", "Approved"],
+    //       default: "Pending",
+    //     },
         categoryId: {
           type: schemaType.ObjectID, // Reference to Category
           ref: "category",

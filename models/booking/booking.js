@@ -10,6 +10,7 @@ const booking = new mongoose.Schema({
   },
   professsionalId: {
     type: schemaType.TypeString,
+    ref:"user",
   },
   requestId: {
     type: schemaType.TypeString, 
@@ -46,6 +47,16 @@ const booking = new mongoose.Schema({
   
     required: true,
   },
+  serviceAssign: {
+    type: schemaType.TypeString,
+    enum: ["Professional", "Random"],
+    default: "Random",
+  },
+  serviceStatus: {
+        type: schemaType.TypeString,
+        enum: ["Pending", "Cancel", "Approved"],
+        default: "Pending",
+      },
   },
   { timestamps: true }
 );

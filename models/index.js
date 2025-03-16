@@ -18,7 +18,7 @@ import faqCategory from "./faqCategorie/index.js";
 import faqQuestion from "./faqQuestion/index.js";
 import payment from "./payments/index.js";
 import contactUs from "./contactUs/index.js";
-import userBookServ from "./userCategorie/index.js";
+import userBookServ from "./userBookService/index.js";
 import booking from "./booking/index.js";
 import address from "./address/index.js";
 

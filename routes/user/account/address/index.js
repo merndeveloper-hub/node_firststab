@@ -5,6 +5,7 @@ import addAddress from "./add.js";
 import updateAddress from "./update.js";
 import deleteAddress from "./delete.js";
 import getAddress from "./get.js";
+import getSingleUserAddress from "./getSingle.js";
 //import deleteCategory from "./delete-blog.js";
 //import updateCategory from "./update-blog.js";
 
@@ -17,6 +18,6 @@ router.post("/add",addAddress);
  router.put("/:id",updateAddress);
  router.delete("/:id", deleteAddress);
 // Get Single Blog
-//router.get("/single/:id", getSingleCategory);
+router.get("/:id", getSingleUserAddress);
 
 export default router;

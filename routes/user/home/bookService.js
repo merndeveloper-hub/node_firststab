@@ -2,6 +2,7 @@ import Joi from "joi";
 import { findOne, insertNewDocument } from "../../../helpers/index.js";
 import booking from "../../../models/booking/booking.js";
 import category from "../../../models/categorie/index.js";
+import generateUniqueNumber from "../../../utils/index.js";
 
 const schema = Joi.object({
   userId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
@@ -25,7 +26,7 @@ const schema = Joi.object({
 const bookService = async (req, res) => {
   try {
   await schema.validateAsync(req.body)  
-  const {userId,categoryId,professionalId,} =  req.body
+  const {userId,categoryId,professionalId} =  req.body
 //console.log( req.body.subCategories[0].id," req.body.subCategories[0].id");
 
  
@@ -43,6 +44,10 @@ if(professionalId){
   return res
   .status(400)
   .json({ status: 400, message: "No Service Provider Found"}); 
+
+
+
+  
 }
 }
 const findCategorie = await findOne("category",{_id:categoryId})
@@ -83,28 +88,33 @@ if(!bookServ){
   .json({ status: 400, message: "Not Book Service"});
 }
 
-// if(bookServ){
+if(bookServ){
 
 
+  
+  const genrateRequestID = generateUniqueNumber()
+
+console.log(genrateRequestID,"genrateRequestID");
+
+const booking = await insertNewDocument("booking", {
+  userId:findUser?._id,
+  professsionalId:findprofessionalId?._id,
+  requestId: genrateRequestID,
+  serviceType:bookServ.subCategories.serviceType,
+  serviceName:findCategorie.name,
+  typeOfWork:findSubCategorie.name,
+  problemDesc:bookServ.problemDesc,
+ desiredDateTime:bookServ.subCategories.startDate,
+  quotesReceived:0,
+  serviceAssign:professionalId ? "Professional": "Random",
+  serviceStatus: "Pending"
+});
 
 
-// //console.log(filteredSubCategories,"filteredSubCategories");
-
-// const booking = await insertNewDocument("userBookServ", {
-//   userId:findUser._id,
-//   professsionalId:findprofessionalId?._id,
-//   requestId: "",
-//   serviceName:bookServ.subCategories.name,
-//   serviceName:findCategorie.name,
-//   typeOfWork:findSubCategorie.name,
-//   problemDesc:bookServ.problemDesc,
-//  desiredDateTime:bookServ.subCategories.startDate,
-//   quotesReceived:0,
-// });
+console.log(booking,"bookings");
+}
 
 
-// console.log(booking,"bookings");
-// }
     return res
       .status(200)
       .json({ status: 200, message: "Book Service successfully", bookServ});

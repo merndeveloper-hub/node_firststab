@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import userBookServSchema from "./userCategorySchema.js";
+import userBookServSchema from "./userBookServiceSchema.js";
 
 const userBookServ = mongoose.model("userBookServ", userBookServSchema);
 
