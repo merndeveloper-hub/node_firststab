@@ -18,7 +18,7 @@ zipCode: Joi.string().required()
       'string.pattern.base': 'ZIP code must be in the format 12345 or 12345-6789',
       'any.required': 'ZIP code is required',
     }),
-mobile: Joi.string().required()
+mobile: Joi.string()
         .pattern(new RegExp("^\\+?[0-9]{8,15}$"))
         .messages({
           "string.pattern.base":

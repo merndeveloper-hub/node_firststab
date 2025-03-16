@@ -9,13 +9,21 @@ const booking = new mongoose.Schema({
     required: true,
   },
   professsionalId: {
-    type: schemaType.TypeString,
+    type: schemaType.ObjectID,
     ref:"user",
+  },
+  bookServiceId: {
+    type: schemaType.ObjectID,
+    ref:"userBookServ",
   },
   requestId: {
     type: schemaType.TypeString, 
     deafult:0,
     required: true,
+  },
+  cancelledReason: {
+    type: schemaType.TypeString, 
+    default:""
   },
   serviceType: {
     type: schemaType.TypeString, 

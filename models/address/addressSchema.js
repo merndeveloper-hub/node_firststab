@@ -28,8 +28,7 @@ const addressSchema = new mongoose.Schema(
       type: schemaType.TypeString,
     },
     mobile: {
-      type: schemaType.TypeString,
-      unique: true,
+      type: schemaType.TypeString
     },
     created_date: {
       type: schemaType.TypeDate,

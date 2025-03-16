@@ -97,6 +97,7 @@ if(bookServ){
 console.log(genrateRequestID,"genrateRequestID");
 
 const booking = await insertNewDocument("booking", {
+  bookServiceId:bookServ._id,
   userId:findUser?._id,
   professsionalId:findprofessionalId?._id,
   requestId: genrateRequestID,
