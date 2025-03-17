@@ -16,7 +16,6 @@ const attemptSchema = new mongoose.Schema(
     block_duration: {
       type: SchemaType.TypeDate,
       default: Date.now,
-      //   required: true,
     },
     block: {
       type: SchemaType.TypeBoolean,

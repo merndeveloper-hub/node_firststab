@@ -13,8 +13,68 @@ const userBookServSchema = new mongoose.Schema(
     addressId: {
       type: schemaType.ObjectID, 
       ref: "address"
-   
     },
+    requestId: {
+      type: schemaType.TypeString, 
+      deafult:0,
+      required: true,
+    },
+    cancelledReason: {
+      type: schemaType.TypeString, 
+      default:""
+    },
+    serviceType: {
+      type: schemaType.TypeString, 
+     enum:['isChat','isVirtual','isRemote','inInPerson'],
+      required: true,
+    },
+    serviceName: {
+      type: schemaType.TypeString, 
+    
+      required: true,
+    },
+    typeOfWork: {
+      type: schemaType.TypeString, 
+    
+      required: true,
+    },
+    problemDesc: {
+      type: schemaType.TypeString, 
+    
+      required: true,
+    },
+    quotesReceived: {
+      type: schemaType.TypeNumber, 
+    desfault:0,
+     
+    },
+    refundableAmount: {
+      type: schemaType.TypeNumber,  
+    },
+    desiredDateTime: {
+      type: schemaType.TypeDate
+    },
+    endDateTime: {
+      type: schemaType.TypeDate
+    },
+    serviceAssign: {
+      type: schemaType.TypeString,
+      enum: ["Professional", "Random"],
+      default: "Random",
+    },
+    serviceStatus: {
+          type: schemaType.TypeString,
+          enum: ["Cancelled", "Completed","OnGoing"],
+          default: "OnGoing",
+        },
+        reasonCancel: {
+          type: schemaType.TypeString,
+          enum: ["Change of Plans", "Delayed Need", "Emergency Situation","Financial Reasons","Found an Alternative Solution","No Show","Others","Rescheduling","Schedule Conflict","Service No Longer Needed","Unsatisfactory Provider Options"],
+      
+        },reasonDesc: {
+          type: schemaType.TypeString
+          
+        },
     image: {
       type: schemaType.TypeString,
      
@@ -27,16 +87,7 @@ const userBookServSchema = new mongoose.Schema(
       type: schemaType.ObjectID,
       ref: "user"
     },
-    // serviceAssign: {
-    //   type: schemaType.TypeString,
-    //   enum: ["Professional", "Random"],
-    //   default: "Random",
-    // },
-    // serviceStatus: {
-    //       type: schemaType.TypeString,
-    //       enum: ["Pending", "Cancel", "Approved"],
-    //       default: "Pending",
-    //     },
+  
         categoryId: {
           type: schemaType.ObjectID, // Reference to Category
           ref: "category",
@@ -51,8 +102,8 @@ const userBookServSchema = new mongoose.Schema(
             },
               serviceType:{type: schemaType.TypeString},
               startDate: {type: schemaType.TypeDate},
-              EndDate: {type: schemaType.TypeDate},
               startTime: {type: schemaType.TypeDate},
+              EndDate: {type: schemaType.TypeDate},
               endTime: {type: schemaType.TypeDate}
             
           },
@@ -61,6 +112,9 @@ const userBookServSchema = new mongoose.Schema(
       type: schemaType.TypeDate,
       default: Date.now,
     },
+
+
+    
   },
   
   { timestamps: true }

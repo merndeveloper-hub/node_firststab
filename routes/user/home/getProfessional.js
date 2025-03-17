@@ -68,47 +68,60 @@ const getProfessional = async (req, res) => {
       // {
       //   $match: { "subCategories.0": { $exists: true } } // Ensure at least one matching subCategory exists
       // }
-
       {
-    $match: { 
-      categoryId: new mongoose.Types.ObjectId(categoryId) // Match categoryId
-    }
-  },
-  {
-    $project: {
-      userId: 1,
-      price: 1,
-      categoryId: 1,
-      createdAt: 1,
-      updatedAt: 1,
-      subCategories: {
-        $filter: {
-          input: "$subCategories",
-          as: "sub",
-          cond: {
-            $and: [
-              { $eq: ["$$sub.id", new mongoose.Types.ObjectId(subCategorieId)] }, // Match subCategory ID
-              { $eq: [`$$sub.${servieType}`, true] } // Check if serviceType is true
-            ]
+        $match: { categoryId:  new mongoose.Types.ObjectId(categoryId) } // Match categoryId
+      },
+      {
+        $project: {
+          proId: 1,
+          rating: 1,
+          categoryId: 1,
+          subCategories: {
+            $filter: {
+              input: "$subCategories",
+              as: "sub",
+              cond: {
+                $and: [
+                  { $eq: ["$$sub.id",  new mongoose.Types.ObjectId(subCategorieId)] }, // Match subCategorieId
+                  { $eq: [`$$sub.${servieType}`, true] } // Check if serviceType is true
+                ]
+              }
+            }
           }
         }
+      },
+      {
+        $match: { "subCategories.0": { $exists: true } } // Ensure at least one matching subCategory exists
+      },
+      {
+        $lookup: {
+          from: "users", // Join with users collection
+          localField: "proId",
+          foreignField: "_id",
+          as: "userDetails"
+        }
+      },
+      {
+        $unwind: { path: "$userDetails", preserveNullAndEmptyArrays: true } // Flatten user details
+      },
+      {
+        $group: {
+          _id: "$proId", // Group by proId (unique results)
+          proId: { $first: "$proId" }, // Keep first occurrence of proId
+          rating: { $first: "$rating" }, // Keep first occurrence of rating
+          first_Name: { $first: "$userDetails.first_Name" }, // First occurrence of first_Name
+          last_Name: { $first: "$userDetails.last_Name" } // First occurrence of last_Name
+        }
+      },
+      {
+        $project: {
+          _id: 0, // Remove _id from output
+          proId: 1,
+          rating: 1,
+          first_Name: 1,
+          last_Name: 1
+        }
       }
-    }
-  },
-  {
-    $match: { "subCategories.0": { $exists: true } } // Ensure at least one matching subCategory exists
-  },
-  {
-    $lookup: {
-      from: "users", // Collection where user data is stored
-      localField: "userId", // Extracted userId from the document
-      foreignField: "_id", // Matching field in the users collection
-      as: "userDetails"
-    }
-  },
-  {
-    $unwind: { path: "$userDetails", preserveNullAndEmptyArrays: true } // Flatten userDetails array
-  }
       
     ]);
    

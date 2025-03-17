@@ -15,56 +15,35 @@ const userSchema = new mongoose.Schema(
     },
     profile: {
       type: schemaType.TypeString,
-  
     },
     countryCode: {
       type: schemaType.TypeString,
-  
     },
     video: {
       type: schemaType.TypeString,
-  
     },
     address_Type: {
       type: schemaType.TypeString,
-  
     },
     address_line1: {
       type: schemaType.TypeString,
-  
     },
     address_line2: {
       type: schemaType.TypeString,
-  
     },
     state: {
       type: schemaType.TypeString,
-  
     },
     date: {
       type: schemaType.TypeString,
-  
     },
     time: {
       type: schemaType.TypeString,
-  
     },
-    // dateOfBirth: {
-    //   type: schemaType.TypeString,
-    // },
-    // ssn_Number: {
-    //   type: schemaType.TypeString,
-    // },
     mobile: {
       type: schemaType.TypeString,
       unique: true,
     },
-    // serviceType: {
-    //   type: [String], // Array of strings
-    //   enum: ["video", "message", "remote", "in_personal"], // Allowed values
-    //   default: undefined,
-    // },
-
     password: {
       type: schemaType.TypeString,
     },
@@ -80,21 +59,15 @@ const userSchema = new mongoose.Schema(
 
     city: {
       type: schemaType.TypeString,
-    }, zipCode: {
+    },
+    zipCode: {
       type: schemaType.TypeString,
     },
     totalPro: {
       type: schemaType.TypeNumber,
-      require:true,
-      default:0
+      default: 0,
     },
-    // type: {
-    //   type: schemaType.TypeString,
-    //   ref: "userTypes",
-    // },
-
-    userType: { type: schemaType.TypeString, enum: ["user", "pro"] }, // Identifies the user type
-
+    userType: { type: schemaType.TypeString, enum: ["user", "pro"] },
     created_date: {
       type: schemaType.TypeDate,
       default: Date.now,
@@ -109,6 +82,3 @@ const userSchema = new mongoose.Schema(
 );
 
 export default userSchema;
-
-
-

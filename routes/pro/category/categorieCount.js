@@ -16,7 +16,7 @@ const getSingleCategoryCount = async (req, res) => {
   // console.log(req.query.page,"req.query.page");
   
   
-  const getUserCategory = await find('proCategory',{userId:id})
+  const getUserCategory = await find('proCategory',{proId:id})
   console.log(getUserCategory,"getUserCategory");
   // Har object ke andar `subCategories` ka length add karega
   const getcategory = await find('category')

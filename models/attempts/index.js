@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import attemptSchema from "./attempts-schema.js";
+import attemptSchema from "./attemptsSchema.js";
 
 const attempt = mongoose.model("attempt", attemptSchema);
 

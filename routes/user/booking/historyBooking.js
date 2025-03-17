@@ -10,7 +10,7 @@ const historyBooking = async (req, res) => {
   try {
     await schema.validateAsync(req.params);
     const { id } = req.params;
-const historybook = await find("booking",{userId:id,serviceStatus:"Cancelled"|| "Approved" || "completed"})
+const historybook = await find("booking",{userId:id,serviceStatus:"Cancelled" || "completed"})
 
 if(historybook.length <= 0){
   return res.status(200).json({ status: 200, message: "No History Booking Found!" });

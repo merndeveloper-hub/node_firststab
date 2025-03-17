@@ -16,6 +16,15 @@ const booking = new mongoose.Schema({
     type: schemaType.ObjectID,
     ref:"userBookServ",
   },
+  categoryId: {
+    type: schemaType.ObjectID,
+    ref:"category",
+  },
+  subCategoryId: {
+    type: schemaType.ObjectID,
+    ref:"subCategory",
+  },
+
   requestId: {
     type: schemaType.TypeString, 
     deafult:0,
@@ -62,8 +71,8 @@ const booking = new mongoose.Schema({
   },
   serviceStatus: {
         type: schemaType.TypeString,
-        enum: ["Pending", "Cancelled", "Approved", "completed"],
-        default: "Pending",
+        enum: ["Cancelled", "Approved", "Completed","OnGoing"],
+        default: "OnGoing",
       },
   },
   { timestamps: true }

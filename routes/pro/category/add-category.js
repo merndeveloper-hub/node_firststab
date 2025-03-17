@@ -2,7 +2,7 @@ import Joi from "joi";
 import { insertNewDocument } from "../../../helpers/index.js";
 
 const schema = Joi.object({
-  userId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
+  proId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
   price: Joi.number().min(0).required(),
   categoryId: Joi.string().hex().length(24).required(),
         subCategories: Joi.array().items(

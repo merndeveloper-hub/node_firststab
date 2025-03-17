@@ -7,8 +7,8 @@ import attempt from "./attempts/index.js";
 import userOTP from "./otpVerification/index.js";
 import category from "./categorie/index.js";
 import subCategory from "./subCategorie/index.js";
-import subSubCategory from "./subSubCategorie/index.js";
-import counter from "./counter/index.js";
+//import subSubCategory from "./subSubCategorie/index.js";
+//import counter from "./counter/index.js";
 import userCategory from "./proCategorie/index.js";
 import proCategory from "./proCategorie/index.js";
 import proBusin from "./proBusiness/index.js";
@@ -39,8 +39,8 @@ db.user = user
  db.userOTP=userOTP;
  db.category=category
  db.subCategory=subCategory
- db.subSubCategory=subSubCategory
- db.counter=counter
+ //db.subSubCategory=subSubCategory
+ //db.counter=counter
  db.proCategory=proCategory
  db.proBusin=proBusin
  db.token=token

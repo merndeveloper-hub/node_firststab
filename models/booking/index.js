@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bookingSchema from "./booking.js";
+import bookingSchema from "./bookingSchema.js";
 
 const booking = mongoose.model("booking", bookingSchema);
 

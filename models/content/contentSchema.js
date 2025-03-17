@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import schemaType from "../../types/index.js";
 
 
-const categorySchema = new mongoose.Schema({
+const contentSchema = new mongoose.Schema({
   title: { type: schemaType.TypeString},
   pageCode: { type: schemaType.TypeString},
   image: { type: schemaType.TypeString},
@@ -15,4 +15,4 @@ const categorySchema = new mongoose.Schema({
       },
 },{ timestamps: true });
 
-export default categorySchema;
+export default contentSchema;

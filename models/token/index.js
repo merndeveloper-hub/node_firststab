@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import tokenSchema from "./token-schema.js";
+import tokenSchema from "./tokenSchema.js";
 
 const token = mongoose.model("token", tokenSchema);
 

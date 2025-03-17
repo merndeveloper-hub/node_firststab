@@ -18,7 +18,7 @@ import express from "express";
 // const launchpad = require("./launchpad");
 // const swap = require("./swap");
 // const userCollection = require("./userCollection");
-// const allUsers = require("./allUsers");
+ import booking from "./booking/index.js";
  import faqCategory from "./faqCategorie/index.js";
  import faqQuestion from "./faqQuestion/index.js";
 
@@ -32,7 +32,7 @@ const router = express.Router();
 // router.use("/profile", profile);
 // router.use("/follow", tokenVerification, follow);
 // router.use("/search", search);
-// router.use("/web3", web3);
+router.use("/booking", booking);
 router.use("/profile", updateProfile); // after login check the token
  router.use("/business", business);
  router.use("/category", category);

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import proCategorySchema from "./proCategory-schema.js";
+import proCategorySchema from "./proCategorySchema.js";
 
 const proCategory = mongoose.model("proCategory", proCategorySchema);
 

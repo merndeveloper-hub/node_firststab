@@ -15,8 +15,6 @@ const tokenSchema = new mongoose.Schema(
     },
     expiresAt: {
       type: SchemaType.TypeDate,
-    //  required: true,
-     // index: true
     },
     type: {
       type: SchemaType.TypeString,

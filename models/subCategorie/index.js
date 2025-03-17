@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import subCategorySchema from"./subCategorie-schema.js";
+import subCategorySchema from"./subCategorieSchema.js";
 
 const subCategory = mongoose.model("subCategory", subCategorySchema);
 

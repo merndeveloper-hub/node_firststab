@@ -6,22 +6,15 @@ const contactUs = new mongoose.Schema({
   userId: {
     type: schemaType.ObjectID, 
    ref:"user",
-    required: true,
   },
   fullName: {
-    type: schemaType.TypeString, 
-  
-    required: true,
+    type: schemaType.TypeString,
   },
   phoneNumber: {
     type: schemaType.TypeString, 
-   
-    required: true,
   },
   email: {
     type: schemaType.TypeString, 
-   
-    required: true,
   },
   subject: {
     type: schemaType.TypeString, 
@@ -30,7 +23,6 @@ const contactUs = new mongoose.Schema({
   },
   message: {
     type: schemaType.TypeString, 
-  
     required: true,
   },
   },

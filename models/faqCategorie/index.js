@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import faqCategorySchema from"./categorie-schema.js";
+import faqCategorySchema from"./faqCategorySchema.js";
 
 const faqCategory = mongoose.model("faqCategory", faqCategorySchema);
 

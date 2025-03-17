@@ -1,5 +1,5 @@
 import express from "express";
-import newRequestBooking from "./newRequestBooking";
+import newRequestBooking from "./newRequestBooking.js";
 //import addCategory from "./add-category.js";
 //import getAllCategories from "./get-AllCategories.js";
 //import getSingleCategory from "./get-single-blog.js";

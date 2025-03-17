@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import proBusinSchema from "./counter-schema.js";
+import proBusinSchema from "./proBusinessSchema.js";
 
 const proBusin = mongoose.model("proBusin", proBusinSchema);
 

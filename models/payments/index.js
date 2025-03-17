@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import PaymentSchema from "./payment-schema.js";
+import PaymentSchema from "./paymentSchema.js";
 
 const payment = mongoose.model("payment", PaymentSchema);
 

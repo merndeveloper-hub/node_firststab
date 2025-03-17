@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import counterSchema from "./counter-schema.js";
+// import mongoose from "mongoose";
+// import counterSchema from "./counterSchema.js";
 
-const counter = mongoose.model("counters", counterSchema);
+// const counter = mongoose.model("counters", counterSchema);
 
-export default counter;
+// export default counter;

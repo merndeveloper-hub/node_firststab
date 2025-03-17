@@ -10,14 +10,14 @@ const cancelledBooking = async (req, res) => {
   try {
     await schema.validateAsync(req.params);
     const { id } = req.params;
-const goingbooking = await findOne("booking",{_id:id,serviceStatus:"Pending"})
+const goingbooking = await findOne("userBookServ",{_id:id})
 
 if(goingbooking.length <= 0){
   return res.status(200).json({ status: 200, message: "No Booking Found!" });
 }
 
 
-const cancelbooking = await updateDocument("booking",{_id:id},{serviceStatus:"Cancelled",cancelledReason:"Cancelled By You"})
+const cancelbooking = await updateDocument("userBookServ",{_id:id},{serviceStatus:"Cancelled",cancelledReason:"Cancelled By You"})
 
 if(!cancelbooking){
   return res.status(200).json({ status: 200, message: "No Booking Found!" });
