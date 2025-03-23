@@ -7,7 +7,7 @@ const schemaForId = Joi.object().keys({
 });
 
 const schema = Joi.object().keys({
-  status: Joi.string().required(),
+  status: Joi.string(),
 });
 
 const booking = async (req, res) => {
