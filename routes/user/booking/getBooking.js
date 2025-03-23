@@ -1,5 +1,6 @@
 import Joi from "joi";
-import { find } from "../../../helpers/index.js";
+import { find, getAggregate } from "../../../helpers/index.js";
+import mongoose from "mongoose";
 
 const schemaForId = Joi.object().keys({
   id: Joi.string().required(),
@@ -14,15 +15,43 @@ const booking = async (req, res) => {
     await schema.validateAsync(req.body);
     await schemaForId.validateAsync(req.params);
     const { id } = req.params;
-    const { status } = req.body;
+    const { status } = req.query;
+console.log(status,"staus");
 
-    let bookService;
-    // pending ==> ongling,pending,accepted
-    if (status == "OnGoing") {
-      bookService = await find("userBookServ", {
-        userId: id,
-        status: { $in: ["Accepted", "Pending", "Requested", "OnGoing"] },
-      });
+    const bookService = await getAggregate("userBookServ", [
+      // Step 1: Match documents based on userId and status
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(id), // Match userId
+          status: { $in: ["Accepted", "Pending", "Requested", "OnGoing"] }, // Match status
+        },
+      },
+          
+           {
+             $lookup: {
+               from: "subcategories", // Join with "users" collection
+               let: { subCategoryId: { $toObjectId: "$subCategories.id" } }, // Extract professsionalId
+               pipeline: [
+                 {
+                   $match: {
+                     $expr: { $eq: ["$_id", "$$subCategoryId"] },
+                   }, // Compare userId with _id in users collection
+                 },
+                 {
+                   $project: {
+                     categoryName:1,
+                     name: 1,  
+                     _id: 0,
+                   }, // Return only required fields
+                 },
+               ],
+               as: "procategories",
+             },
+           }
+ 
+    ]);
+
+   
 
       if (!bookService || bookService.length == 0) {
         return res
@@ -30,7 +59,7 @@ const booking = async (req, res) => {
           .json({ status: 400, message: "No Booking Found!" });
       }
       
-    }
+    
 
     return res.status(200).json({ status: 200, bookService });
   } catch (e) {

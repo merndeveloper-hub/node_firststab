@@ -62,7 +62,7 @@ const proServiceRequest = async (req, res) => {
                 }, // Return only required fields
               },
             ],
-            as: "proDetails",
+            as: "procategories",
           },
         }
      

@@ -37,7 +37,7 @@ router.get("/:id", booking);
 router.delete("/:id", cancelledBooking);
 
 
-//----Get Pro Accepted services----//
+//----User accepted Pro Accepted services----//
 router.get("/useraccept/:id", userAcceptProServiceRequest);
 
 

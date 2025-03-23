@@ -156,16 +156,20 @@ console.log(req.body.subCategories.orderStartDate,"orderStartDate");
       }
     });
 
-    console.log(bookServ, "bookServ");
+ 
+    
     if (!bookServ || bookServ.length == 0) {
       return res.status(400).json({
         status: 400,
         message: "Book Service not created successfully",
       });
     }
+console.log("checking");
 
     //----------------SEEN PRO DASHBOARD userBookServICE Random Professional--------
-    if (bookServ && !professionalId) {
+    if (bookServ && !findprofessionalId) {
+    console.log("hcekingin");
+    
       const categoryIds = findCategorie.map((cat) => cat._id); // Extract category IDs
       console.log(categoryIds, "categoryIds");
 
@@ -249,39 +253,48 @@ for (const doc of getProCategory) {
       //}
     } else {
       const getProCategory = await getAggregate("proCategory", [
-        {
-          $match: {
-            categoryId: new mongoose.Types.ObjectId(categoryId), // Match category ID
-            "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID
+        
+          {
+            $match: {
+              proId: new mongoose.Types.ObjectId(professionalId), // Match professional ID
+              categoryId: new mongoose.Types.ObjectId(categoryId), // Match category ID
+              subCategories: {
+                $elemMatch: {
+                  id: new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID
+                },
+              },
+            },
           },
-        },
-        {
-          $unwind: "$subCategories", // Unwind subCategories array
-        },
-        {
-          $match: {
-            "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID again after unwind
-            [`subCategories.${req.body.subCategories.serviceType}`]: true, // Match the specified serviceType field
+          {
+            $unwind: "$subCategories", // Unwind subCategories array
           },
-        },
-        {
-          $project: {
-            _id: 1, // Extract _id
-            proId: 1, // Extract proId
+          {
+            $match: {
+              "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID again after unwind
+              [`subCategories.${req.body.subCategories.serviceType}`]: true, // Match the specified serviceType field
+            },
           },
-        },
-      ]);
+          {
+            $project: {
+              _id: 1, // Extract _id
+              proId: 1, // Extract proId
+            },
+          },
+        ]);
+      
 
+      console.log(getProCategory,"getProCategory123");
       if(!getProCategory || getProCategory.length == 0){
         return res
         .status(400)
         .json({ status: 400, message: "No professionals available for the selected service" });
       }
 
+
       const probookService = await insertNewDocument("proBookingService", {
         ...req.body,
         proServiceId: getProCategory._id,
-        professsionalId: getProCategory.proId,
+        professsionalId: findprofessionalId,
         bookServiceId: bookServ._id,
         categoryId:req.body.categoryId,
           subCategoryId:req.body.subCategories.id,
