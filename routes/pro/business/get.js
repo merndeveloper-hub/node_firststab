@@ -1,28 +1,30 @@
-const { findOne } = require("../../../helpers");
+import Joi from "joi";
+import { find } from "../../../helpers/index.js";
+import userType from "../../../models/userType/index.js";
 
-const getMetaData = async (req, res) => {
+const schema = Joi.object({
+  id: Joi.string().required()
+})
+
+const getBusinInfo = async (req, res) => {
   try {
-    const { id } = req.params;
-    if (!id.length)
-      return res
-        .status(400)
-        .json({ status: 400, message: "medatadata id is required" });
+    await schema.validateAsync(req.params)
+    const {id} = req.params
+    const getBusinness = await find("user",{_id:id,userType:"pro"});
+  
+    if (!getBusinness || getBusinness.length === 0) {
+     
+      return res.status(400).send({
+        status: 400,
+        message: "No Buniness Info found"
+      });
+    }
 
-    const nftMetaData = await findOne("launchpadMetaData", { _id: id });
-
-    if (!nftMetaData)
-      return res
-        .status(404)
-        .json({ status: 404, message: "nft metadata not found" });
-    // return res.status(200).json({
-    // status: 200,
-    //   message: "nft metadata fetched successfully",
-    //   data: nftMetaData,
-    // });
-    return res.status(200).json(nftMetaData);
+    return res.status(200).json({ status: 200, data: { getBusinness } });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ status: 500, message: e.message });
+    return res.status(400).json({ status: 400, message: e.message });
   }
 };
-module.exports = getMetaData;
+
+export default getBusinInfo;

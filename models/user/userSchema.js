@@ -53,6 +53,14 @@ const userSchema = new mongoose.Schema(
     businessaddress: {
       type: schemaType.TypeString,
     },
+    avgReviewsPro: {
+      type: schemaType.TypeNumber,
+      
+    },
+    totalReviewsPro: {
+      type: schemaType.TypeNumber,
+     
+    },
     businessphoneNo: {
       type: schemaType.TypeString,
     },
@@ -64,8 +72,8 @@ const userSchema = new mongoose.Schema(
       type: schemaType.TypeString,
     },
     totalPro: {
-      type: schemaType.TypeNumber,
-      default: 0,
+      type: schemaType.TypeNumber
+      
     },
     userType: { type: schemaType.TypeString, enum: ["user", "pro"] },
     created_date: {
@@ -74,7 +82,7 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: schemaType.TypeString,
-      enum: ["Active", "Disabled"],
+      enum: ["Active", "InActive","AdminHideUser","Disabled"],
       default: "Active",
     },
   },

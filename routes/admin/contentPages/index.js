@@ -1,22 +1,31 @@
 import express from "express";
-// const addLaunch = require("./add-launch");
-// const getLaunch = require('./get-launchPad');
-// const approvedLaunchpad = require("./update");
-import addContentPage from "./add-launch.js";
-import getContentPage from "./get-launchPad.js";
+
+import addContentPage from "./add.js";
+import getContentPage from "./get.js";
 import updateContentPage from "./update.js";
-import updateContentStatus from "./updateStatus.js";
+import hidePage from "./hide.js";
 import singleContentPage from "./getSingle.js";
 
-
+//-------Media image add---//
 import multipart from "connect-multiparty";
 const multipartMiddleware = multipart();
+
 const router = express.Router();
 
+//------Add Page--------//
 router.post("/add",multipartMiddleware, addContentPage);
-router.get("/get", getContentPage);
-router.get("/get/:id", singleContentPage)
-router.put("/updatedstatus/:id", updateContentStatus);
-router.put("/update/:id",multipartMiddleware, updateContentPage);
+
+//------Update Page--------//
+router.put("/:id",multipartMiddleware, updateContentPage);
+
+//------Get All Pages--------//
+router.get("/", getContentPage);
+
+//------Get Single Page--------//
+router.get("/:id", singleContentPage)
+
+//------Hide Single Page--------//
+router.put("/hide/:id", hidePage);
+
 
 export default router;

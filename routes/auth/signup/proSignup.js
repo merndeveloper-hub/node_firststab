@@ -5,13 +5,14 @@ import {
   findOneAndSelect,
   updateDocument,
   getAggregate,
+  deleteDocument,
 } from "../../../helpers/index.js";
 import { JWT_EXPIRES_IN, SECRET } from "../../../config/index.js";
 
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import sendOTPVerificationEmail from "../otpVerification/sendOTPSignup.js";
+import sendOTPSignup from "../otpVerification/sendOTPSignup.js";
 
 const schema = Joi.object({
   first_Name: Joi.string().min(3).required(),
@@ -45,7 +46,7 @@ const schema = Joi.object({
     .required()
     .messages({
       "string.pattern.base":
-        "Mobile number must be 8-15 digits and may include a country code (e.g., +123456789).",
+        "Mobile number must be 8-15 digits",
       "any.required": "Mobile number is required.",
     }),
   password: Joi.string()
@@ -116,7 +117,10 @@ const proSignup = async (req, res) => {
 
 
     const { password, city,zipCode,email, mobile,first_Name,last_Name,userType,status } = req.body;
-
+    const deleteEmailExist = await findOneAndSelect("user", { email,status: "InActive" });
+    if (deleteEmailExist) {
+      await deleteDocument("user", { email });
+    }
     const emailExist = await findOneAndSelect("user", { email });
     if (emailExist) {
       return res
@@ -127,7 +131,7 @@ const proSignup = async (req, res) => {
     if (mobileExist) {
       return res
         .status(400)
-        .send({ status: 400, message: "Mobile number already exists" });
+        .send({ status: 400, message: "Mobile number already exists with this email" });
     }
     // const user_type = await findOne("userType", { type });
  
@@ -195,7 +199,8 @@ const proSignup = async (req, res) => {
 
     const user = await insertNewDocument("user", {
       ...req.body,
-     password:req.body.password, 
+     password:req.body.password,
+     status:"InActive",
      totalPro: userCount[0]? userCount[0]?.activeProUsers + 1: 1
       
     });
@@ -205,15 +210,31 @@ const proSignup = async (req, res) => {
       expiresIn: JWT_EXPIRES_IN,
     });
     req.userId = user._id;
-   await sendOTPVerificationEmail({email,userType})
+   await sendOTPSignup({email,userType})
     await session.commitTransaction();
     session.endSession();
-
-    return res.status(200).send({ status: 200, data:{user, token} });
-  } catch (e) {
+    return res.json({
+      status: "Pending",
+      message: "Verification otp email sent",
+      data: {
+        userEmail: email,
+      },
+    });
+   // return res.status(200).send({ status: 200, data:{user, token} });
+  } catch (error) {
     await session.abortTransaction();
     session.endSession();
-    return res.status(400).send({ status: 400, message: e.message });
+    if (error.code === 11000) {
+      // Duplicate key error
+      return res.status(400).send({
+        status: 400,
+        message: "Email already exists. Please use a different email.",
+      });
+    }
+    // Handle other errors
+    console.error("Error saving user:", error);
+    return res.status(500).send({ status: 500, message: "An unexpected error occurred." });
+  //  return res.status(400).send({ status: 400, message: e.message });
   }
 };
 

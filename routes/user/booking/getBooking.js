@@ -1,39 +1,42 @@
 import Joi from "joi";
-import { find, getAggregate } from "../../../helpers/index.js";
+import { find } from "../../../helpers/index.js";
 
 const schemaForId = Joi.object().keys({
   id: Joi.string().required(),
 });
 
 const schema = Joi.object().keys({
-  serviceStatus: Joi.string().required(),
+  status: Joi.string().required(),
 });
-
 
 const booking = async (req, res) => {
   try {
     await schema.validateAsync(req.body);
     await schemaForId.validateAsync(req.params);
     const { id } = req.params;
-const {serviceStatus} = req.body
+    const { status } = req.body;
 
-const booking = await find("userBookServ",{userId:id,serviceStatus})
+    let bookService;
+    // pending ==> ongling,pending,accepted
+    if (status == "OnGoing") {
+      bookService = await find("userBookServ", {
+        userId: id,
+        status: { $in: ["Accepted", "Pending", "Requested", "OnGoing"] },
+      });
 
-if(booking.length <= 0){
-  return res.status(200).json({ status: 200, message: "No Booking Found!" });
-}
-console.log(booking,"booking");
+      if (!bookService || bookService.length == 0) {
+        return res
+          .status(400)
+          .json({ status: 400, message: "No Booking Found!" });
+      }
+      
+    }
 
-
-
-    
-    return res.status(200).json({ status: 200, booking });
+    return res.status(200).json({ status: 200, bookService });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ status: 500, message: e.message });
+    return res.status(400).json({ status: 400, message: e.message });
   }
 };
 
 export default booking;
-
-

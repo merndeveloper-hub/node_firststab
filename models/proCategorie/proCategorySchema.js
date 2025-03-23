@@ -6,28 +6,28 @@ const proCategorySchema = new mongoose.Schema(
     proId: {
       type: schemaType.ObjectID,
       ref: "user",
-      required: true,
     },
     price: {
       type: schemaType.TypeNumber,
-      required: true,
     },
     rating: {
       type: schemaType.TypeNumber,
-      default:0
+      default: 0,
     },
     categoryId: {
       type: schemaType.ObjectID, // Reference to Category
       ref: "category",
-      required: true,
     },
-    
+    userBookServId: {
+      type: schemaType.ObjectID, // Reference to Category
+      ref: "category",
+    },
+
     subCategories: [
       {
         id: {
           type: schemaType.ObjectID, // Reference to SubCategory
           ref: "SubCategory",
-          required: true,
         },
         isRemote: {
           type: schemaType.TypeBoolean,

@@ -1,51 +1,49 @@
-1. user and pro registeration
-   mobile ==>
+    
+1) User Signup
+http://localhost:5000/api/v1/auth/register/user
 
-2. verrify and expirt in email code
+2) Pro Signup
+http://localhost:5000/api/v1/auth/register/pro
 
-3. userType:user/pro add verify and ofrget process
+3) User and Pro login
+http://localhost:5000/api/v1/auth/userlogin
 
-4. get categories
+4) User and Pro logOut
+id ==> token document user id
+http://localhost:5000/api/v1/auth//logout/:id
 
-////////////PHASE 1 //////////
-USER AND PRO SIGNUP AND LOGIN 
-FORGET PASSWORD BOTH
-CREATE CATEGORIES ==> MAIN CATEROITE AND SUBCATEGORIE
+5) User and Pro Forget Password
+http://localhost:5000/api/v1/auth/forgetpassword
 
+6) User and Pro Send OTP (
+//----------User and Pro forgot Password Send OTP--------------------//)
+http://localhost:5000/api/v1/auth/sendotp
 
+7) User and Pro Verify OTP
+http://localhost:5000/api/v1/auth/verifyotp
 
-{
-
-Business name:"",
-phone number:"",
-address:"",
-categories data
-sub categoreis with select type
-
-
-}
-
-Regitstration remove city and zipcode
-update register 
-stripe
+8) User and Pro ReSend OTP
+http://localhost:5000/api/v1/auth/resendotp
 
 
-////////
-Search Category as a guest,user,etc..
 
 
-///
-get professional 
-userDeatil replace professionalId
 
-//http://localhost:5000/api/v1/user/home/getprofessional
-is mein bs name and rating
 
-professinId joi ke validation dekhni hian
+
 
 
 ///ask the theo/////
 jb a=hum koi service lete hai is mein end time nhi btate ktni derh ke service pro de ga inchat,virtual,inperson
+
+booking
+bookingRatings
+bookingQuotes
+bookingPayment
+bookingStatus
+bookingTimeline
+
+Request Sent,Cancelled By Customer,Confirmed by Customer,Cancelled By Professional
 
 ////////ER DIAGRAM///
 https://dbdiagram.io/d

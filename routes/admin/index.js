@@ -24,8 +24,14 @@ const router = express.Router();
  router.use("/faqQuestion", faqQuestion);
 router.use("/faqCategory", faqCategory);
 router.use("/contentPage", contentPage);
+
+//-----------Admin Add Main Category---------------//
 router.use("/category",category)
+
+//-----------Admin Add Sub Category---------------//
 router.use("/subcategory",subCategory)
+
+//-----------Admin Add Sub-sub Category---------------//
 router.use("/subsubcategory",subSubCategory)
 
 export default router;

@@ -6,21 +6,32 @@ import {
   updateDocument,
   find,
 } from "../../../helpers/index.js";
+import Joi from "joi";
+
+const schema = Joi.object({
+  userEmail: Joi.string().email().required(),
+  otp: Joi.string().required()
+});
+
 
 const verifyOTP = async (req, res) => {
+
   try {
+
+    await schema.validateAsync(req.body)
     const { userEmail, otp } = req.body;
-    if (!userEmail || !otp) {
-      throw Error("Empty otp details are not allowed");
-    } else {
+      if (!userEmail || !otp) {
+        return res.status(400).send({ status: 400, message: "Both email and OTP are required" });
+      }
+     else {
       const UserOTPVerificationRecords = await find("userOTP", {
         userEmail,
+        status:"Pending"
       });
       if (UserOTPVerificationRecords.length <= 0) {
         // no record found
-        throw new Error(
-          "Account record doesn't exist or has been verified already. Please sign up or login"
-        );
+        return res.status(400).send({ status: 400, message: "No OTP verification record found for this email. Please sign up again" });
+      
       } else {
         // user otp record exists
         const { expiresAt } = UserOTPVerificationRecords[0];
@@ -31,31 +42,31 @@ const verifyOTP = async (req, res) => {
           //await UserOTPVerification.deleteMany({ userId });
           const deleteOtp = await deleteManyDocument("userOTP", {
             userEmail,
+            status:"Pending"
           });
-
-          throw new Error("Code has expired. Please request again");
+          return res.status(400).send({ status: 400, message: "Code has expired. Please request again" });
+      
         } else {
           const validOTP = await bcrypt.compare(otp, hashedOTP);
-
           if (!validOTP) {
             // supplied otp is wrong
-            throw new Error("Invalid code passed. Check your inbox.");
+            return res.status(400).send({ status: 400, message: "The OTP you entered is invalid. Please check your inbox and try again." });
           } else {
             // success
-            await updateDocument("user", { email: userEmail }, { verified: true });
+            await updateDocument("user", { email: userEmail }, { status: "Active" });
             //  await UserOTPVerification.deleteMany({ userId });
             await deleteManyDocument("userOTP", { userEmail });
       
             res.status(200).json({
               status: "Verified",
-              message: "User email verified successfully.",
+              message: "OTP verified successfully.",
             });
           }
         }
       }
     }
   } catch (error) {
-    res.json({
+    res.status(400).json({
       status: "Failed",
       message: error.message,
     });

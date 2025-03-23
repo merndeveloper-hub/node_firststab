@@ -8,6 +8,7 @@ const PaymentSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    professionalId: { type: SchemaType.ObjectID, ref: "User"},
     amount: {
       type: SchemaType.TypeNumber,
       required: true
@@ -35,10 +36,12 @@ const PaymentSchema = new mongoose.Schema(
     //  required: true,
      // index: true
     },
-
+    
+    paymentIntentId: { type: SchemaType.TypeString},
     paymentMethod: { type: SchemaType.TypeString, enum: ["stripe", "paypal"], required: true },
     transactionId: { type: SchemaType.TypeString, required: true },
-    status: { type: SchemaType.TypeString, enum: ["pending", "success", "failed"], default: "pending" },
+    status: { type: SchemaType.TypeString, enum: [ "Success", "Failed","Pending", "Released", "Refunded"], default: "Pending" },
+    createdAt: { type: Date, default: Date.now }
   },
   { timestamps: true }
 );

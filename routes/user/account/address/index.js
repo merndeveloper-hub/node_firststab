@@ -13,11 +13,20 @@ import getSingleUserAddress from "./getSingle.js";
 
 const router = express.Router();
 
-router.get("/", getAddress);
-router.post("/add",addAddress);
- router.put("/:id",updateAddress);
- router.delete("/:id", deleteAddress);
-// Get Single Blog
+//--------- Get User Created Address for IsInPerson Service need----/
+router.get("/all/:id", getAddress);
+
+//---------User Created Address for IsInPerson Service need----/
+router.post("/",addAddress);
+
+//---------update Get User Created Address for IsInPerson Service need----/
+router.put("/:id",updateAddress);
+
+//---------delete Get User Created Address for IsInPerson Service need----/
+router.delete("/:id", deleteAddress);
+
+
+//---------Single Get User Created Address for IsInPerson Service need----/
 router.get("/:id", getSingleUserAddress);
 
 export default router;

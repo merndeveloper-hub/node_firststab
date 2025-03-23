@@ -5,7 +5,7 @@ import express from "express";
 // const web3 = require("./web3");
 // const nft = require("./nft");
 // const sell = require("./sell");
- import category from "./category/index.js";
+ //import category from "./category/index.js";
 // const bid = require("./bid");
 // const history = require("./history");
 // const auction = require("./auction");
@@ -19,13 +19,14 @@ import express from "express";
 // const swap = require("./swap");
 // const userCollection = require("./userCollection");
  import booking from "./booking/index.js";
- import faqCategory from "./faqCategorie/index.js";
+ 
  import faqQuestion from "./faqQuestion/index.js";
 
  import contentPages from "./contentPages/index.js";
  import business from "./business/index.js";
 import updateProfile from "./profile/index.js";
 import stripePayment from "./payment/index.js";
+import home from "./home/index.js";
 
 const router = express.Router();
 
@@ -35,9 +36,10 @@ const router = express.Router();
 router.use("/booking", booking);
 router.use("/profile", updateProfile); // after login check the token
  router.use("/business", business);
- router.use("/category", category);
+ //router.use("/category", category);
+ router.use("/home", home);
+ 
  router.use("/contentPage", contentPages);
- router.use("/faqCategory", faqCategory);
  router.use("/faqQuestion", faqQuestion);
   router.use("/payment", stripePayment);
 // router.use("/auction", auction);

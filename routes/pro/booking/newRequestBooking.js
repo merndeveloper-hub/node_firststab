@@ -1,69 +1,92 @@
 import Joi from "joi";
-import { find, getAggregate } from "../../../helpers/index.js";
-import mongoose from "mongoose";
+import { find, findOne, getAggregate } from "../../../helpers/index.js";
+import mongoose, { Mongoose } from "mongoose";
+import getProfessional from "./getProfessionalService.js";
 
 const schema = Joi.object().keys({
-  userId: Joi.string().required(),
-  categoryId: Joi.string().required(),
-  subCategoryId: Joi.string().required(),
-  subType: Joi.string().required(),
+  id: Joi.string().required()
 });
-
-
-
 
 const newRequestBooking = async (req, res) => {
   try {
-    await schema.validateAsync(req.body);
-  
-    const {userId,categoryId,subCategoryId,subType} = req.body
+    await schema.validateAsync(req.params);
 
-const newRequest = await getAggregate("proCategory",[
-  {
-    $match: {
-        userId:  new mongoose.Types.ObjectId(userId),
-        categoryId:  new mongoose.Types.ObjectId(categoryId),
-        "subCategories.id":  new mongoose.Types.ObjectId(subCategoryId) // Ensure subCategoryId exists
+    const { id } = req.params;
+
+    const proBookService = await findOne("user", { _id: id });
+
+    if (!proBookService || proBookService.length == 0) {
+      return res.status(400).json({ status: 400, message: "User Not Found" });
     }
-},
-{
-    $project: {
-        subCategories: {
-            $filter: {
-                input: "$subCategories",
-                as: "sub",
-                cond: {
-                    $and: [
-                        { $eq: ["$$sub.id", new mongoose.Types.ObjectId(subCategoryId)] }, // Match subCategoryId
-                        { $eq: [`$$sub.${subType}`, true] }   // Check if subType is true
-                    ]
-                }
-            }
-        }
-    }
-}
-]);
 
+    const getProBookService = await getAggregate("proBookingService", [
+      {
+        $match: {
+          professsionalId: new mongoose.Types.ObjectId(id),
+          status: {$in:["Accepted","Pending"]}
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // Join with "user" collection
+          let: { userId: { $toObjectId: "$userId" } }, // Extract userId from proBookingService
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$userId"] },
+              }, // Compare userId with _id in user collection
+            },
+            {
+              $project: { first_Name: 1, last_Name: 1, _id: 0 }, // Return only firstName & lastName
+            },
+          ],
+          as: "userDetails",
+        },
+      },
+      // {
+      //   $lookup: {
+      //     from: "userbookservs", // Join with "user" collection
+      //     let: { bookServiceId: { $toObjectId: "$bookServiceId" } }, // Extract userId from proBookingService
+      //     pipeline: [
+      //       {
+      //         $match: {
+      //           $expr: { $eq: ["$_id", "$$bookServiceId"] },
+      //         }, // Compare userId with _id in user collection
+      //       },
+      //     ],
+      //     as: "userBookServiceDetails",
+      //   },
+      // },
+      // {
+      //   $lookup: {
+      //     from: "procategories", // Join with "user" collection
+      //     let: { proServiceId: { $toObjectId: "$proServiceId" } }, // Extract userId from proBookingService
+      //     pipeline: [
+      //       {
+      //         $match: {
+      //           $expr: { $eq: ["$_id", "$$proServiceId"] },
+      //         }, // Compare userId with _id in user collection
+      //       },
+      //     ],
+      //     as: "proServiceDetails",
+      //   },
+      // },
+    ]);
 
-
-
-
-console.log(newRequest,"newRequest");
-
-if(newRequest.length <= 0){
-  return res.status(200).json({ status: 200, message: "No New Request Found!" });
-}
-
-
-
+    console.log(getProBookService,"getProBookService");
     
-    return res.status(200).json({ status: 200, newRequest });
+
+    if (!getProBookService || getProBookService.length == 0) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "No New Service Request Found!" });
+    }
+
+    return res.status(200).json({ status: 200, getProBookService });
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ status: 500, message: e.message });
+    return res.status(400).json({ status: 400, message: e.message });
   }
 };
 
 export default newRequestBooking;
-
-

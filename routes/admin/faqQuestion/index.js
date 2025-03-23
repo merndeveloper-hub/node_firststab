@@ -1,19 +1,27 @@
 import express from "express";
-// const addLaunch = require("./add-launch");
-// const getLaunch = require('./get-launchPad');
-// const approvedLaunchpad = require("./update");
-import addContentPage from "./add-launch.js";
-import getContentPage from "./get-launchPad.js";
-import updateContentPage from "./update.js";
-import updateContentStatus from "./updateStatus.js";
-import singleContentPage from "./getSingle.js";
+
+import addFaqQuestion from "./add.js";
+import getFaqQuestion from "./get.js";
+import updateFaqQuestion from "./update.js";
+import hideFaqQuestion from "./hide.js";
+import getFaqSingleQuestion from "./getSingle.js";
 
 const router = express.Router();
 
-router.post("/add", addContentPage);
-router.get("/get", getContentPage);
-router.get("/get/:id", singleContentPage)
-router.put("/updatedstatus/:id", updateContentStatus);
-router.put("/update/:id", updateContentPage);
+//----Add FAQ Question--------//
+router.post("/add", addFaqQuestion);
+
+
+//----Get FAQ Question--------//
+router.get("/get", getFaqQuestion);
+
+//----Get Single FAQ Question--------//
+router.get("/:id", getFaqSingleQuestion)
+
+//----Hide Single FAQ Question--------//
+router.put("/hide/:id", hideFaqQuestion);
+
+//----Update FAQ Question--------//
+router.put("/:id", updateFaqQuestion);
 
 export default router;

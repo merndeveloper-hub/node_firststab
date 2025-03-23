@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import bookingSchema from "./bookingSchema.js";
+import bookingDetailsSchema from "./bookingDetailSchema.js";
 
-const booking = mongoose.model("booking", bookingSchema);
+//const booking = mongoose.model("booking", bookingSchema);
+const bookingDetail = mongoose.model('bookingDetail', bookingDetailsSchema);
 
-export default booking;
+export default bookingDetail;

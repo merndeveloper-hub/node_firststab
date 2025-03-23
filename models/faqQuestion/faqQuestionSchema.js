@@ -6,9 +6,9 @@ const faqQuestionSchema = new mongoose.Schema({
   title: { type: schemaType.TypeString },
   answer: { type: schemaType.TypeString },
   displayPostion: { type: schemaType.TypeNumber },
-  FaqCategorieName: { type: schemaType.TypeString },
-  FaqCategorieid: { type: schemaType.TypeObjectId ,ref:"faqCategory"},
-  status: { type: schemaType.TypeString, enum: ['Active', 'Inactive'], default: 'Active' },
+  faqCategorieName: { type: schemaType.TypeString },
+  faqCategorieId: { type: schemaType.TypeObjectId ,ref:"faqCategory"},
+  status: { type: schemaType.TypeString, enum: ['Active', 'InActive'], default: 'Active' },
  
    created_date: {
         type: schemaType.TypeDate,

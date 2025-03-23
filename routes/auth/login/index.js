@@ -20,18 +20,16 @@ const loginUser = async (req, res) => {
   try {
     await schema.validateAsync(req.body);
 
-  
-    
- 
     const user = await findOneAndSelect(
       "user",
       { email }
     );
+console.log(user,"user");
 
     if (user) {
       if (!user?.password) {
         return res
-          .status(404)
+          .status(400)
           .send({ status: 400, message: "No Password found" });
       }
       const passwordIsValid = bcrypt.compareSync(password, user?.password);
@@ -57,7 +55,7 @@ const loginUser = async (req, res) => {
         const diffMs = blockTime - now;
         if (updateAttempt.block && updateAttempt.no_of_attempt === 6 && diff) {
           console.log(diff);
-          return res.status(404).send({
+          return res.status(400).send({
             status: 400,
             // message: "Your account is blocked for 5 minutes",
             message: `You are blocked for ${Math.round(
@@ -71,7 +69,7 @@ const loginUser = async (req, res) => {
               ? ""
               : `${Math.round((diffMs % 86400000) / 3600000 - 1)} hr & `;
           const minutes = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-          return res.status(404).send({
+          return res.status(400).send({
             status: 400,
             message: `You are blocked for ${hrs}${minutes} minutes`,
           });
@@ -131,7 +129,7 @@ const loginUser = async (req, res) => {
         const diff = blockTime > now ? true : false;
         const diffMs = blockTime - now;
         if (updateAttempt.block && updateAttempt.no_of_attempt === 6 && diff) {
-          return res.status(404).send({
+          return res.status(400).send({
             status: 400,
             message: `You are blocked for ${Math.round(
               (diffMs % 86400000) / 60000
@@ -144,7 +142,7 @@ const loginUser = async (req, res) => {
               ? ""
               : `${Math.round((diffMs % 86400000) / 3600000 - 1)} hr & `;
           const minutes = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-          return res.status(404).send({
+          return res.status(400).send({
             status: 400,
             message: `You are blocked for ${hrs}${minutes} minutes`,
           });
@@ -185,13 +183,13 @@ const loginUser = async (req, res) => {
   //res.cookie("refreshToken", refresh_token, { httpOnly: true, secure: true, sameSite: "Strict" });
 
       
-  return res.status(200).send({ status: 200, data:{user, token,refresh_token} });
+  return res.status(200).send({ status: 200, data:{user,token,refresh_token} });
 
 
     } else {
       return res
-        .status(404)
-        .send({ status: 404, message: "User does not exist!" });
+        .status(400)
+        .send({ status: 400, message: "User does not exist!" });
     }
   } catch (e) {
     res.status(400).send({ status: 400, message: e.message });

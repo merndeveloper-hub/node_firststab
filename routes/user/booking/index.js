@@ -8,16 +8,40 @@ import express from "express";
 
 import booking from "./getBooking.js";
 import cancelledBooking from "./cancleBooking.js";
+import proServiceRequest from "./getProServiceReq.js";
+import userAcceptProServiceRequest from "./userAcceptProServiceRequest.js";
+// import releasePayment from "./releasePayment.js";
+// import refundPayment from "./refundPayment.js";
 //import historyBooking from "./historyBooking.js";
 
 
 const router = express.Router();
 
+///--------User get all created,requested,accepted services------///
 router.get("/:id", booking);
+
+
 //router.post("/add",multipartMiddleware, addCategory);
- //router.put("/:id",multipartMiddleware, updateCategory);
- router.delete("/:id", cancelledBooking);
-// Get Single Blog
-//router.get("/history/:id", historyBooking);
+
+//user accept pro request
+//router.put("/holdamount/:id", userAcceptProServiceRequest);
+
+//  releasePayment to pro 
+// router.post("/releasepayment/:id", releasePayment);
+
+// //refundPayment
+// router.post("/refundPayment/:id", refundPayment);
+
+
+///--------Remove get (created,requested,accepted services)------///
+router.delete("/:id", cancelledBooking);
+
+
+//----Get Pro Accepted services----//
+router.get("/useraccept/:id", userAcceptProServiceRequest);
+
+
+//----Get Pro Accepted services----//
+router.get("/proaccept/:id", proServiceRequest);
 
 export default router;

@@ -2,9 +2,10 @@ import express from "express";
 //import addCategory from "./add-category.js";
 
 
-import multipart from "connect-multiparty";
 import updateProfile from "./update.js";
 import findUser from "./get.js";
+
+import multipart from "connect-multiparty";
 const multipartMiddleware = multipart();
 
 const router = express.Router();

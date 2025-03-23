@@ -1,36 +1,27 @@
 import Joi from "joi";
-import { insertNewDocument, findOne, updateDocument, deleteDocument } from "../../../../helpers/index.js";
+import { deleteDocument } from "../../../../helpers/index.js";
 
-
-
-
-
-
+const schema = Joi.object({
+  id: Joi.string().required(),
+});
 
 const deleteAddress = async (req, res) => {
   try {
- const {userId} = req.body
- 
-    
-   
-
-
-
-
+    await schema.validateAsync(req.params);
+    const { id } = req.params;
 
     const deletedAddress = await deleteDocument(
       "address",
-     
-{
-  _id:req.params.id,
-  userId:userId,
-}
 
-    
+      {
+        _id: id,
+      }
     );
 
-    if (!deletedAddress) {
-      return res.status(404).send({ status: 404, message: "No Address found" });
+    if (!deletedAddress || deletedAddress.length == 0) {
+      return res
+        .status(400)
+        .send({ status: 400, message: "Address Not found" });
     }
 
     return res
@@ -38,7 +29,7 @@ const deleteAddress = async (req, res) => {
       .send({ status: 201, message: "Address deleted successfully" });
   } catch (e) {
     console.log(e);
-    return res.status(500).send({ status: 500, message: e.message });
+    return res.status(400).send({ status: 400, message: e.message });
   }
 };
 

@@ -1,19 +1,22 @@
 import express from "express";
-//import addCategory from "./add-category.js";
-import getAllCategories from "./getCategorie.js";
-//import getSingleCategory from "./get-single-blog.js";
-//import deleteCategory from "./delete-blog.js";
-//import updateCategory from "./update-blog.js";
+
 import bookService from "./bookService.js"
 
+import getProfessionalService from "./getProfessionalService.js";
+import getAllCategoriesWithSubcate from "../../pro/home/getAdminMainSubCategory.js";
+import getCategories from "./getAdminCategorie.js";
+import getSubCateWithPagination from "../../pro/home/getSubCategoriePagination.js";
+
+
 import multipart from "connect-multiparty";
-import getProfessional from "./getProfessional.js";
 const multipartMiddleware = multipart();
 
 const router = express.Router();
 
-router.get("/", getAllCategories);
-router.get("/getprofessional",getProfessional);
+
+//----------Get Pro whose give service in this category and subcategory----//
+router.get("/getproservice",getProfessionalService);
+
  //router.put("/:id",multipartMiddleware, updateCategory);
  //router.delete("/:id", deleteCategory);
 // Get Single Blog
@@ -21,6 +24,17 @@ router.get("/getprofessional",getProfessional);
 
 
 //Book Service
-router.post("/bookservice", bookService)
+router.post("/bookservice",multipartMiddleware, bookService)
+
+
+//--------Get All Admin Categories With subcategories---//
+router.get("/subcategory",getAllCategoriesWithSubcate)
+
+//--------Get All Admin Categories-------//
+router.get("/",getCategories)
+
+//--------Get Single Admin Category With subcategories Pagination---//
+router.get("/subcategory/:id", getSubCateWithPagination);
+
 
 export default router;
