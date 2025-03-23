@@ -87,6 +87,9 @@ console.log(req.body,"body");
       }
     }
     
+
+
+    
     let uploadedFiles;
     if (req?.files?.media) {
       // Upload All Files to Cloudinary
@@ -184,11 +187,11 @@ console.log("checking");
           },
         },
         {
-          $unwind: "$subCategories", // Unwind subCategories array
+          $unwind: "$subCategories", // Unwind the subCategories array
         },
         {
           $match: {
-            "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID again after unwind
+            "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID again
             [`subCategories.${req.body.subCategories.serviceType}`]: true, // Match the specified serviceType field
           },
         },
@@ -200,8 +203,8 @@ console.log("checking");
         },
         // {
         //   $match: {
-        //     categoryId: { $in: categoryIds }, // Match all category IDs
-        //     "subCategories.id": { $in: subCategoryIds }, // Match all subCategory IDs
+        //     categoryId: new mongoose.Types.ObjectId(categoryId), // Match category ID
+        //     "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID
         //   },
         // },
         // {
@@ -209,13 +212,14 @@ console.log("checking");
         // },
         // {
         //   $match: {
-        //     "subCategories.id": { $in: subCategoryIds }, // Match subCategory IDs again after unwind
+        //     "subCategories.id": new mongoose.Types.ObjectId(req.body.subCategories.id), // Match subCategory ID again after unwind
+        //     [`subCategories.${req.body.subCategories.serviceType}`]: true, // Match the specified serviceType field
         //   },
         // },
         // {
         //   $project: {
-        //     _id: 1, // Extract proId
-        //     proId: 1,
+        //     _id: 1, // Extract _id
+        //     proId: 1, // Extract proId
         //   },
         // },
       ]);

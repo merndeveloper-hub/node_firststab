@@ -33,10 +33,14 @@ const updateNewRequestBooking = async (req, res) => {
         .status(400)
         .json({ status: 400, message: "Does not exist new booking service!" });
     }
+console.log(proBookService,"proBookService");
 
     const findUserBookService = await findOne("userBookServ", {
       _id: proBookService.bookServiceId,
     });
+
+    console.log(findUserBookService,"findUserBookService");
+    
 
     const updateUserBookService = await updateDocument(
       "userBookServ",

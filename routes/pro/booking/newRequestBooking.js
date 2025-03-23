@@ -43,34 +43,28 @@ const newRequestBooking = async (req, res) => {
           as: "userDetails",
         },
       },
-      // {
-      //   $lookup: {
-      //     from: "userbookservs", // Join with "user" collection
-      //     let: { bookServiceId: { $toObjectId: "$bookServiceId" } }, // Extract userId from proBookingService
-      //     pipeline: [
-      //       {
-      //         $match: {
-      //           $expr: { $eq: ["$_id", "$$bookServiceId"] },
-      //         }, // Compare userId with _id in user collection
-      //       },
-      //     ],
-      //     as: "userBookServiceDetails",
-      //   },
-      // },
-      // {
-      //   $lookup: {
-      //     from: "procategories", // Join with "user" collection
-      //     let: { proServiceId: { $toObjectId: "$proServiceId" } }, // Extract userId from proBookingService
-      //     pipeline: [
-      //       {
-      //         $match: {
-      //           $expr: { $eq: ["$_id", "$$proServiceId"] },
-      //         }, // Compare userId with _id in user collection
-      //       },
-      //     ],
-      //     as: "proServiceDetails",
-      //   },
-      // },
+      {
+        $lookup: {
+          from: "subcategories", // Join with "users" collection
+          let: { subCategoryId: { $toObjectId: "$subCategoryId" } }, // Extract professsionalId
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$_id", "$$subCategoryId"] },
+              }, // Compare userId with _id in users collection
+            },
+            {
+              $project: {
+                categoryName:1,
+                name: 1,  
+                _id: 0,
+              }, // Return only required fields
+            },
+          ],
+          as: "procategories",
+        },
+      }
+    
     ]);
 
     console.log(getProBookService,"getProBookService");
