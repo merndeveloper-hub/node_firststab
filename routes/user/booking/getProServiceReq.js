@@ -185,7 +185,7 @@ const proServiceRequest = async (req, res) => {
     console.log(getProBookService, "getProBookService");
 
 if(!getProBookService || getProBookService.length == 0){
-  return res.status(400).json({ status: 400, message: "No professional quotes available at the moment." });
+  return res.status(200).json({ status: 200, message: "No professional quotes available at the moment." });
 }
 
     return res.status(200).json({ status: 200, getProBookService });

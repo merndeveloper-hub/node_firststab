@@ -55,8 +55,8 @@ console.log(status,"staus");
 
       if (!bookService || bookService.length == 0) {
         return res
-          .status(400)
-          .json({ status: 400, message: "No Booking Found!" });
+          .status(200)
+          .json({ status: 200, message: "No Booking Found!" });
       }
       
     

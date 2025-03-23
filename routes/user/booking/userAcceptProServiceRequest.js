@@ -21,7 +21,7 @@ const userAcceptProServiceRequest = async (req, res) => {
     const getProBookService = await updateDocument("proBookingService",{_id:id},{...req.body,status:"OnGoing"})
 
 if(!getProBookService || getProBookService.length == 0){
-  return res.status(400).json({ status: 400, message: "No professional quotes available at the moment." });
+  return res.status(200).json({ status: 200, message: "No professional quotes available at the moment." });
 }
 
 const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBookService.bookServiceId},{...req.body,status:"OnGoing"})
