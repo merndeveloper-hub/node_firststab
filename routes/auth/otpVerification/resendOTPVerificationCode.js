@@ -27,7 +27,7 @@ const resendOTPVerificationCode = async (req, res) => {
       
 
   return res.status(200).json({
-      status: "Pending",
+      status: 200,
       message: "Verification otp email sent",
       data: {
         userEmail: email,

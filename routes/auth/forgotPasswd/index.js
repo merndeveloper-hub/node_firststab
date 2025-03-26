@@ -63,8 +63,8 @@ const forgotPaasswd = async (req, res) => {
     const emailExist = await findOneAndSelect("user", { email });
     if (!emailExist) {
       return res
-        .status(400)
-        .send({ status: 400, message: "No user found with this email address" });
+        .status(401)
+        .send({ status: 401, message: "No user found with this email address" });
     }
    
     

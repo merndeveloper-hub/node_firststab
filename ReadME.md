@@ -30,7 +30,11 @@ http://localhost:5000/api/v1/auth/resendotp
 
 
 
-
+db error ==> 401
+vadioaion error ==> 400
+catch ==> 400
+success == >200
+created ==> 200
 
 
 ///ask the theo/////

@@ -156,7 +156,7 @@ await schema.validateAsync(req.body)
     }
     // Handle other errors
     console.error("Error saving user:", error);
-    return res.status(500).send({ status: 500, message: "An unexpected error occurred." });
+    return res.status(400).send({ status: 400, message: "An unexpected error occurred." });
   //  return res.status(400).send({ status: 400, message: e.message });
   }
 };

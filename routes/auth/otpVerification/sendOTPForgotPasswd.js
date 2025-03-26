@@ -26,8 +26,8 @@ const sendOTPForgotPasswd = async (req, res) => {
 
     console.log(user, "user");
 
-    if (!user) {
-      return res.status(400).send({ status: 400, message: "No account found with this email address" });
+    if (!user || user.length == 0) {
+      return res.status(401).send({ status: 401, message: "No account found with this email address" });
     }
 
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
@@ -66,7 +66,7 @@ await session.commitTransaction();
     session.endSession();
 
   return res.status(200).json({
-      status: "Pending",
+      status: 200,
       message: "Verification otp email sent",
       data: {
         userEmail: email,
@@ -74,7 +74,7 @@ await session.commitTransaction();
     });
   } catch (error) {
     res.status(400).json({
-      status: "Failed",
+      status: 400,
       message: "Enter current otp",
     });
   }
