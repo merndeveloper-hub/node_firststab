@@ -60,7 +60,7 @@ console.log(req.body,"body");
     if (!findCategorie || findCategorie.length == 0) {
       return res
       .status(400)
-      .json({ status: 400, message: "Categorie Not Found" });
+      .json({ status: 400, message: "Category Not Found" });
     }
     console.log(findCategorie,"findCategorie");
     
@@ -74,7 +74,7 @@ console.log(req.body,"body");
     if (!findSubCategorie || findSubCategorie.length == 0) {
       return res
         .status(400)
-        .json({ status: 400, message: "Sub Categorie Not Found" });
+        .json({ status: 400, message: "Sub Category Not Found" });
     }
 
     //IsInPerson service Type in require user address
@@ -229,7 +229,7 @@ if(!getProCategory || getProCategory.length == 0){
   
   return res
   .status(400)
-  .json({ status: 400, message: "No professionals available for the selected service" });
+  .json({ status: 400, message: "Professional does not exist in" });
 }
 for (const doc of getProCategory) {
         console.log(findSubCategorie._id,"findSubCategorie._id");
@@ -288,10 +288,12 @@ for (const doc of getProCategory) {
       
 
       console.log(getProCategory,"getProCategory123");
+      console.log(findprofessionalId.first_Name,"findprofessionalId");
+      
       if(!getProCategory || getProCategory.length == 0){
         return res
         .status(400)
-        .json({ status: 400, message: "No professionals available for the selected service" });
+        .json({ status: 400, message: `The Professional ${findprofessionalId.first_Name} + ${findprofessionalId.last_Name} not available for the selected service.Kindly select other professional.` });
       }
 
 

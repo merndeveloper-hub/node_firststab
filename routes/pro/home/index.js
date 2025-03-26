@@ -23,6 +23,9 @@ router.get("/subcategory",getAllCategoriesWithSubcate)
 router.get("/",getCategories)
 
 
+//--------Get Single Admin Category With subcategories Pagination---//
+router.get("/subcategory/:id", getSubCateWithPagination);
+
 
 //--------Count Pro Service ---//
 router.get("/servicecount/:id",getServiceCategoryCount);
@@ -37,7 +40,5 @@ router.post("/", createService);
 router.delete("/service/:id", removeServiceCategory);
 
 
-//--------Get Single Admin Category With subcategories Pagination---//
-router.get("/subcategory/:id", getSubCateWithPagination);
 
 export default router;

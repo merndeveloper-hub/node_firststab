@@ -4,15 +4,16 @@ import { getAggregate, insertNewDocument } from "../../../helpers/index.js";
 import mongoose from "mongoose";
 
 const schema = Joi.object({
-  categoryId: Joi.string().hex().length(24).required(),
-  subCategorieId: Joi.string().hex().length(24).required(),
+  categoryId: Joi.string().required(),
+  subCategorieId: Joi.string().required(),
   servieType: Joi.string().required(),
 });
 
 const getProfessionalService = async (req, res) => {
   try {
-    await schema.validateAsync(req.body);
-    const { categoryId, subCategorieId, servieType } = req.body;
+    await schema.validateAsync(req.query);
+    const { categoryId, subCategorieId, servieType } = req.query;
+console.log(req.query,"query");
 
     const proService = await getAggregate("proCategory", [
       {
@@ -87,6 +88,7 @@ const getProfessionalService = async (req, res) => {
 
     return res.status(200).json({ status: 200, proService });
   } catch (e) {
+    console.log("error");
     
     return res.status(400).json({ status: 400, message: e.message });
   }
