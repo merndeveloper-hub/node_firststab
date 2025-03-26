@@ -21,7 +21,7 @@ const verifyOTP = async (req, res) => {
     await schema.validateAsync(req.body)
     const { userEmail, otp } = req.body;
       if (!userEmail || !otp) {
-        return res.status(400).send({ status: 400, message: "Both email and OTP are required" });
+        return res.status(401).send({ status: 401, message: "Both email and OTP are required" });
       }
      else {
       const UserOTPVerificationRecords = await find("userOTP", {
@@ -30,7 +30,7 @@ const verifyOTP = async (req, res) => {
       });
       if (UserOTPVerificationRecords.length <= 0) {
         // no record found
-        return res.status(400).send({ status: 400, message: "No OTP verification record found for this email. Please sign up again" });
+        return res.status(401).send({ status: 401, message: "No OTP verification record found for this email. Please sign up again" });
       
       } else {
         // user otp record exists
@@ -44,13 +44,13 @@ const verifyOTP = async (req, res) => {
             userEmail,
             status:"Pending"
           });
-          return res.status(400).send({ status: 400, message: "Code has expired. Please request again" });
+          return res.status(200).send({ status: 200, message: "Code has expired. Please request again" });
       
         } else {
           const validOTP = await bcrypt.compare(otp, hashedOTP);
           if (!validOTP) {
             // supplied otp is wrong
-            return res.status(400).send({ status: 400, message: "The OTP you entered is invalid. Please check your inbox and try again." });
+            return res.status(200).send({ status: 200, message: "The OTP you entered is invalid. Please check your inbox and try again." });
           } else {
             // success
             await updateDocument("user", { email: userEmail }, { status: "Active" });
@@ -58,7 +58,7 @@ const verifyOTP = async (req, res) => {
             await deleteManyDocument("userOTP", { userEmail });
       
             res.status(200).json({
-              status: "Verified",
+              status: 200,
               message: "OTP verified successfully.",
             });
           }

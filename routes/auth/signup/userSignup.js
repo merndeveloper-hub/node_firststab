@@ -137,10 +137,10 @@ await schema.validateAsync(req.body)
     await session.commitTransaction();
     session.endSession();
  return res.json({
-      status: "Pending",
-      message: "Verification otp email sent",
+      status: 200,
+      message: "OTP sent to your email. Check inbox to proceed.",
       data: {
-        userEmail: email,
+        userId: user._id,
       },
     });
  //   return res.status(200).send({ status: 200, data:{user, token} });
