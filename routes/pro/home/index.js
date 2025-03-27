@@ -10,6 +10,7 @@ import multipart from "connect-multiparty";
 import removeServiceCategory from "./removeServiceCategory.js";
 import getServiceCategoryCount from "./getServiceCount.js";
 import createService from "./addService.js";
+import updateService from "./updateService.js";
 const multipartMiddleware = multipart();
 
 const router = express.Router();
@@ -34,7 +35,8 @@ router.get("/servicecount/:id",getServiceCategoryCount);
 //--------Create Service With Categories and subcategories---//
 router.post("/", createService);
 
-// router.put("/:id",multipartMiddleware, updateCategory);
+//--------update Service With Categories and subcategories and businessname---//
+ router.put("/",updateService);
 
 //-----Delete pro created service----//
 router.delete("/service/:id", removeServiceCategory);

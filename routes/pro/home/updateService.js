@@ -1,8 +1,10 @@
 import Joi from "joi";
-import { insertNewDocument } from "../../../helpers/index.js";
+import { deleteManyDocument, insertManyDocuments, insertNewDocument, updateDocument } from "../../../helpers/index.js";
 
 const schema = Joi.object({
-  
+  businessname: Joi.string(),
+  businessaddress: Joi.string(),
+  businessphoneNo: Joi.string(),
   proId: Joi.string().hex().length(24).required(), // Must be a valid MongoDB ObjectId
   price: Joi.number().min(0).required(),
   categoryId: Joi.string().hex().length(24).required(),
@@ -17,17 +19,26 @@ const schema = Joi.object({
   ),
 });
 
-const createService = async (req, res) => {
+const updateService = async (req, res) => {
   try {
     await schema.validateAsync(req.body);
 
-    const category = await insertNewDocument("proCategory", {
+const {proId} = req.body
+const deleteCategory = await deleteManyDocument("proCategory",{proId})
+console.log(deleteCategory,"delete");
+
+    const category = await insertManyDocuments("proCategory", {
+      ...req.body,
+    });
+console.log(category,"category");
+
+    const proInfo = await updateDocument("user",{_id:proId}, {
       ...req.body,
     });
 
     return res.status(200).json({
       status: 200,
-      message: "Category created successfully",
+      message: "Category updated successfully",
       category,
     });
   } catch (e) {
@@ -35,4 +46,4 @@ const createService = async (req, res) => {
   }
 };
 
-export default createService;
+export default updateService;

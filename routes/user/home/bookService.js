@@ -171,7 +171,7 @@ console.log("checking");
 
     //----------------SEEN PRO DASHBOARD userBookServICE Random Professional--------
     if (bookServ && !findprofessionalId) {
-    console.log("hcekingin");
+    
     
       const categoryIds = findCategorie.map((cat) => cat._id); // Extract category IDs
       console.log(categoryIds, "categoryIds");
@@ -226,10 +226,29 @@ console.log("checking");
 
       console.log(getProCategory, "getProCategory");
 if(!getProCategory || getProCategory.length == 0){
-  
-  return res
-  .status(400)
-  .json({ status: 400, message: "Professional does not exist in" });
+  // No pro service found in this scenario
+  const probookService = await insertNewDocument("proBookingService", {
+    ...req.body,
+    proServiceId: getProCategory._id,
+    professsionalId: findprofessionalId,
+    bookServiceId: bookServ._id,
+    categoryId:req.body.categoryId,
+      subCategoryId:req.body.subCategories.id,
+    media: uploadedFiles ? uploadedFiles : undefined,
+    requestId: genrateRequestID,
+    serviceType: req.body.subCategories.serviceType,
+    serviceName: findCategorie.name,
+    typeOfWork: findSubCategorie.name,
+    problemDescription: problemDescription,
+    orderStartDate: extractedDate,
+    orderStartTime: extractedTime,
+    orderEndDate: req.body.subCategories.orderEndDate ? extractedEndDate : null,
+    orderEndTime: req.body.subCategories.orderEndTime ? extractedEndTime : null,
+    status: "Pending",
+  });
+  // return res
+  // .status(400)
+  // .json({ status: 400, message: "Booking has been created successfully." });
 }
 for (const doc of getProCategory) {
         console.log(findSubCategorie._id,"findSubCategorie._id");

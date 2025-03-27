@@ -14,10 +14,19 @@ const findOneAndSelect = async (modelDb, queryObj, selectQuery) =>
   await Models[modelDb].findOne(queryObj).select(selectQuery).exec();
 
 const insertNewDocument = async (modelDb, storeObj) => {
-
   let data = new Models[modelDb](storeObj);
   return await data.save();
 };
+
+const insertManyDocuments = async (modelDb, storeObj) => {
+  
+    // Insert multiple documents into the specified model
+    const result = await Models[modelDb].insertMany(storeObj);
+    return result; // Return the result of the insert operation
+ 
+};
+
+
 
 // const updateDocument = async (modelDb, updateQuery, setQuery) =>
 //   await Models[modelDb]
@@ -256,6 +265,7 @@ export {
   find,
   findOne,
   insertNewDocument,
+  insertManyDocuments,
   updateDocument,
   deleteDocument,
   findOneAndPopulate,

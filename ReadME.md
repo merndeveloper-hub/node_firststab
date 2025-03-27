@@ -27,7 +27,7 @@ http://localhost:5000/api/v1/auth/resendotp
 
 
 
-
+http://localhost:5000/api/v1/pro/home ==> update dekhnii hian kl
 
 
 db error ==> 401
