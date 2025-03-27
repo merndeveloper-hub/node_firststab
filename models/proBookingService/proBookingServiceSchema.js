@@ -60,7 +60,7 @@ const proBookingServiceSchema = new mongoose.Schema(
     },
     serviceType: {
       type: schemaType.TypeString,
-      enum: ["isChat", "isVirtual", "isRemote", "inInPerson"],
+      enum: ["isChat", "isVirtual", "isRemote", "isInPerson"],
       //required: true,
     },
     serviceName: {

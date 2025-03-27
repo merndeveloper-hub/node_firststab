@@ -75,7 +75,7 @@ let paymentMethod = await stripe.paymentMethods.create({
        ...req.body,
         paymentMethod: "stripe",
         transactionId: paymentIntent.id,
-        status: "success",
+        status: "Success",
       }
     );
     if (!paymentRes) {

@@ -63,6 +63,7 @@ console.log(req.query,"query");
           _id: "$_id", // Group by proId (unique results)
           proId: { $first: "$proId" }, // Keep first occurrence of proId
           rating: { $first: "$rating" }, // Keep first occurrence of rating
+          avgRating: { $first: "$avgReviewsPro" }, // Keep first occurrence of rating
           first_Name: { $first: "$proDetails.first_Name" }, // First occurrence of first_Name
           last_Name: { $first: "$proDetails.last_Name" }, // First occurrence of last_Name
         },
@@ -72,11 +73,15 @@ console.log(req.query,"query");
           _id: 1, // Remove _id from output
           proId: 1,
           rating: 1,
+          avgRating:1,
           first_Name: 1,
           last_Name: 1,
         },
       },
     ]);
+
+console.log(proService,"proservice");
+
 
     if (!proService || proService == 0) {
       return res

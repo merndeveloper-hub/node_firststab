@@ -287,13 +287,12 @@ for (const doc of getProCategory) {
         ]);
       
 
-      console.log(getProCategory,"getProCategory123");
-      console.log(findprofessionalId.first_Name,"findprofessionalId");
-      
+     
+
       if(!getProCategory || getProCategory.length == 0){
         return res
         .status(400)
-        .json({ status: 400, message: `The Professional ${findprofessionalId.first_Name} + ${findprofessionalId.last_Name} not available for the selected service.Kindly select other professional.` });
+        .json({ status: 400, message: `The Professional ${findprofessionalId.first_Name} ${findprofessionalId.last_Name} not available for the selected service.Kindly select other professional.` });
       }
 
 

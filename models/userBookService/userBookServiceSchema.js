@@ -123,7 +123,7 @@ const userBookServSchema = new mongoose.Schema(
         ref: "subCategory",
         //   required: true,
       },
-      serviceType: { type: schemaType.TypeString,enum: ["isChat", "isVirtual", "isRemote", "inInPerson"] },
+      serviceType: { type: schemaType.TypeString,enum: ["isChat", "isVirtual", "isRemote", "isInPerson"] },
       orderStartDate: { type: schemaType.TypeString },
       orderStartTime: { type: schemaType.TypeString },
       orderEndDate: { type: schemaType.TypeString },

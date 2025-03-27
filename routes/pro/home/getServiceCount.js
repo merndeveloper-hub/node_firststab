@@ -28,10 +28,23 @@ const getServiceCategoryCount = async (req, res) => {
       return {
         name: category ? category.name : "Unknown",
         subCategoryCount: item.subCategories.length,
+        item: item,
       };
     });
 
-    return res.status(200).json({ status: 200, data: { result } });
+    const getBusinness = await find("user",{_id:id,userType:"pro"});
+  
+    if (!getBusinness || getBusinness.length === 0) {
+     
+      return res.status(400).send({
+        status: 400,
+        message: "No Buniness Info found"
+      });
+    }
+
+
+    
+    return res.status(200).json({ status: 200, data: { result,getBusinnessName:getBusinness[0].businessname } });
   } catch (e) {
     console.log(e);
     return res.status(400).json({ status: 400, message: e.message });
