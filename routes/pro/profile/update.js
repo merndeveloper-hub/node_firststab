@@ -9,6 +9,8 @@ cloudinary.config({
 });
 
 const schema = Joi.object({
+  first_Name: Joi.string(),
+  last_Name: Joi.string(),
   profile: Joi.string(),
   video: Joi.string(),
   address_Type: Joi.string(),

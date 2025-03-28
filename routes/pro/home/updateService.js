@@ -24,8 +24,11 @@ const updateService = async (req, res) => {
   try {
    // await schema.validateAsync(req.body);
 
-const {proId} = req.body
-const deleteCategory = await deleteManyDocument("proCategory",{proId})
+
+const {proId} = req.body[0]
+console.log(proId,"body");
+
+const deleteCategory = await deleteManyDocument("proCategory",{proId:proId})
 console.log(deleteCategory,"delete");
 
 const category = await proCategory.insertMany(req.body);
