@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { deleteManyDocument, insertManyDocuments, insertNewDocument, updateDocument } from "../../../helpers/index.js";
+import proCategory from "../../../models/proCategorie/index.js";
 
 const schema = Joi.object({
   businessname: Joi.string(),
@@ -21,16 +22,20 @@ const schema = Joi.object({
 
 const updateService = async (req, res) => {
   try {
-    await schema.validateAsync(req.body);
+   // await schema.validateAsync(req.body);
 
 const {proId} = req.body
 const deleteCategory = await deleteManyDocument("proCategory",{proId})
 console.log(deleteCategory,"delete");
 
-    const category = await insertManyDocuments("proCategory", {
-      ...req.body,
-    });
-console.log(category,"category");
+const category = await proCategory.insertMany(req.body);
+console.log(category, "insert");
+
+
+//     const category = await insertManyDocuments("proCategory", 
+//       [...req.body],
+//     );
+// console.log(category,"category");
 
     const proInfo = await updateDocument("user",{_id:proId}, {
       ...req.body,
@@ -39,7 +44,7 @@ console.log(category,"category");
     return res.status(200).json({
       status: 200,
       message: "Category updated successfully",
-      category,
+     category,
     });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });

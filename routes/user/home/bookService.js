@@ -227,6 +227,8 @@ console.log("checking");
       console.log(getProCategory, "getProCategory");
 if(!getProCategory || getProCategory.length == 0){
   // No pro service found in this scenario
+  console.log(bookServ,"insert");
+  
   const probookService = await insertNewDocument("proBookingService", {
     ...req.body,
     proServiceId: getProCategory._id,

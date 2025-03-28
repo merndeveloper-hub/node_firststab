@@ -21,7 +21,7 @@ const insertNewDocument = async (modelDb, storeObj) => {
 const insertManyDocuments = async (modelDb, storeObj) => {
   
     // Insert multiple documents into the specified model
-    const result = await Models[modelDb].insertMany(storeObj);
+    const result = await Models[modelDb].insertMany([storeObj]);
     return result; // Return the result of the insert operation
  
 };
