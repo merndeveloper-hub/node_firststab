@@ -29,10 +29,22 @@ const schema = Joi.object({
   categoryId: Joi.string().hex().length(24).required(),
   subCategories: Joi.object({
     id: Joi.string().hex().length(24).required(),
-    serviceType: Joi.string(),
-    orderStartDate: Joi.date().optional(),
+    serviceType: Joi.string().required(),
+    orderStartDate: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+    .required()
+    .messages({
+      "string.pattern.base":
+        "orderStart Date is required",
+      "any.required": "orderStart Date is required.",
+    }),
     orderEndDate: Joi.date().optional(),
-    orderStartTime: Joi.date().optional(),
+    orderStartTime: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+    .required()
+    .messages({
+      "string.pattern.base":
+        "orderStart Time is required",
+      "any.required": "orderStart Time is required.",
+    }),
     orderEndTime: Joi.date().optional(),
   }),
 });
@@ -88,6 +100,16 @@ console.log(req.body,"body");
     }
     
 
+    // if (!req?.files?.nft_image?.path) {
+    //   return res.status(400).json({
+    //     status: 400,
+    //     message: "nft Image is required",
+    //   });
+    // }
+    // const cloudObj = await cloudinary.uploader.upload(
+    //   req?.files?.nft_image?.path,{quality: 20}
+    // );
+    // req.body.image = cloudObj.url;
 
     
     let uploadedFiles;
