@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { getDataWithLimit } from "../../../helpers/index.js";
+import { find, findOne, getDataWithLimit } from "../../../helpers/index.js";
 
 const schema = Joi.object().keys({
   id: Joi.string().required(),
@@ -22,15 +22,20 @@ const getSubCateWithPagination = async (req, res) => {
       skip,
       limit
     );
-
+    
     if (!singleSubCategories || singleSubCategories.length === 0) {
       return res.status(400).send({
         status: 400,
         message: "Sub Category Not found",
       });
     }
+    const countSingleSubCategories = await find(
+      "subCategory",
+      { categoryId: id, status: "Active" }
+    );
 
-    return res.status(200).json({ status: 200, data: { singleSubCategories } });
+
+    return res.status(200).json({ status: 200, data: { singleSubCategories,count:countSingleSubCategories?.length } });
   } catch (e) {
     console.log(e);
     return res.status(400).json({ status: 400, message: e.message });
