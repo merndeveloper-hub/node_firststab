@@ -30,7 +30,7 @@ const schema = Joi.object({
   subCategories: Joi.object({
     id: Joi.string().hex().length(24).required(),
     serviceType: Joi.string().required(),
-    orderStartDate: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+    orderStartDate: Joi.string()
     .required()
     .messages({
       "string.pattern.base":
@@ -38,7 +38,7 @@ const schema = Joi.object({
       "any.required": "orderStart Date is required.",
     }),
     orderEndDate: Joi.date().optional(),
-    orderStartTime: Joi.string().pattern(new RegExp("^\\+?[0-9]{8,15}$"))
+    orderStartTime: Joi.string()
     .required()
     .messages({
       "string.pattern.base":
@@ -51,7 +51,9 @@ const schema = Joi.object({
 
 const bookService = async (req, res) => {
   try {
+    console.log(req.body,"body");
     await schema.validateAsync(req.body);
+    
     const {
       userId,
       categoryId,
