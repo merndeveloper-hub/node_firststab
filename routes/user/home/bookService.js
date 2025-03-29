@@ -11,7 +11,7 @@ import {
   extractTime,
 } from "../../../utils/index.js";
 import { v2 as cloudinary } from "cloudinary";
-import mongoose, { overwriteMiddlewareResult } from "mongoose";
+import mongoose from "mongoose";
 
 cloudinary.config({
   cloud_name: "dwebxmktr",
@@ -168,7 +168,7 @@ console.log(req.body,"body");
     ///////////-----Convert date and time------------------///
     // Extract date and time
     let extractedDate, extractedTime, extractedEndDate, extractedEndTime;
-console.log(req.body.subCategories.orderStartDate,"orderStartDate");
+console.log(req.body.subCategories.orderStartTime,"orderStartDate");
 
 
 
@@ -176,14 +176,13 @@ console.log(req.body.subCategories.orderStartDate,"orderStartDate");
       console.log("IN DATE");
       
       extractedDate = extractDate(req.body.subCategories.orderStartDate);
-      extractedTime = extractTime(req.body.subCategories.orderEndDate);
-      extractedEndDate = extractDate(req.body.subCategories.orderStartTime);
+      extractedEndDate = extractDate(req.body.subCategories.orderEndDate);
+      extractedTime = extractTime(req.body.subCategories.orderStartTime);
       extractedEndTime = extractTime(req.body.subCategories.orderEndTime);
     }
     
     console.log(extractedDate,"extractedDate");
     console.log(extractedTime,"extractedTime");
-    
     
     
     //--------Generate RequestID-------------//
@@ -292,7 +291,7 @@ if(!getProCategory || getProCategory.length == 0){
   const probookService = await insertNewDocument("proBookingService", {
     ...req.body,
     proServiceId: getProCategory._id,
-  
+    media: uploadedFiles ?  uploadedFiles : undefined,
     professsionalId: findprofessionalId,
     bookServiceId: bookServ._id,
     categoryId:req.body.categoryId,
@@ -317,6 +316,7 @@ for (const doc of getProCategory) {
         console.log(findSubCategorie._id,"findSubCategorie._id");
         const probookService = await insertNewDocument("proBookingService", {
           ...req.body,
+          media: uploadedFiles ?  uploadedFiles : undefined,
           proServiceId: doc._id,
           professsionalId: doc.proId,
           bookServiceId: bookServ._id,
@@ -380,6 +380,7 @@ for (const doc of getProCategory) {
 
       const probookService = await insertNewDocument("proBookingService", {
         ...req.body,
+        media: uploadedFiles ?  uploadedFiles : undefined,
         proServiceId: getProCategory._id,
         professsionalId: findprofessionalId,
         bookServiceId: bookServ._id,

@@ -3,6 +3,10 @@ import schemaType from "../../types/index.js";
 
 const proBookingServiceSchema = new mongoose.Schema(
   {
+
+    media: {
+      type: schemaType.TypeArray,
+    },
     userId: {
       type: schemaType.ObjectID,
       ref: "user",
