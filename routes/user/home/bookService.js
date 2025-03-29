@@ -102,32 +102,68 @@ console.log(req.body,"body");
     }
     
 
-    // if (!req?.files?.nft_image?.path) {
+    // if (!req?.files?.media?.path) {
     //   return res.status(400).json({
     //     status: 400,
-    //     message: "nft Image is required",
+    //     message: "media Image is required",
     //   });
     // }
     // const cloudObj = await cloudinary.uploader.upload(
-    //   req?.files?.nft_image?.path,{quality: 20}
+    //   req?.files?.media?.path,{quality: 20}
     // );
-    // req.body.image = cloudObj.url;
+    // req.body.media = cloudObj.url;
 
+
+    let uploadedFiles = [];
+    console.log(uploadedFiles,"uploadedFiles");
+    if (req.files.media) {
     
-    let uploadedFiles;
-    if (req?.files?.media) {
-      // Upload All Files to Cloudinary
-      uploadedFiles = await Promise.all(
-        req.files.map(async (file) => {
-          const options = file.mimetype.startsWith("video")
-            ? { resource_type: "video", allowed_formats: ["mp4", "avi", "mov"] }
-            : { quality: 20, allowed_formats: ["jpg", "jpeg", "png", "jfif"] };
-
-          const result = await cloudinary.uploader.upload(file.path, options);
-          return result.secure_url;
-        })
-      );
+    
+    
+    
+   // try {
+      // Ensure nft_image is treated as an array
+      const bookServiceImages = Array.isArray(req.files.media) 
+        ? req.files.media 
+        : [req.files.media];
+    
+      for (const file of bookServiceImages) {
+        const cloudObj = await cloudinary.uploader.upload(file.path, { quality: 20 });
+        uploadedFiles.push(cloudObj.url);
+      }
+    
+      req.body.images = uploadedFiles;
     }
+      // res.status(200).json({
+      //   status: 200,
+      //   message: "Files uploaded successfully",
+      //   images: uploadedFiles,
+      // });
+    
+    // } catch (error) {
+    //   console.error("Upload Error:", error);
+    //   res.status(500).json({
+    //     status: 500,
+    //     message: "Error uploading files",
+    //     error: error.message,
+    //   });
+    // }
+    
+    
+    // let uploadedFiles;
+    // if (req?.files?.media) {
+    //   // Upload All Files to Cloudinary
+    //   uploadedFiles = await Promise.all(
+    //     req.files.map(async (file) => {
+    //       const options = file.mimetype.startsWith("video")
+    //         ? { resource_type: "video", allowed_formats: ["mp4", "avi", "mov"] }
+    //         : { quality: 20, allowed_formats: ["jpg", "jpeg", "png", "jfif"] };
+
+    //       const result = await cloudinary.uploader.upload(file.path, options);
+    //       return result.secure_url;
+    //     })
+    //   );
+    // }
     
     ///////////-----Convert date and time------------------///
     // Extract date and time
@@ -168,7 +204,7 @@ console.log(req.body.subCategories.orderStartDate,"orderStartDate");
 
     const bookServ = await insertNewDocument("userBookServ", {
       ...req.body,
-      media: uploadedFiles ? uploadedFiles : undefined,
+      media: uploadedFiles ?  uploadedFiles : undefined,
       requestId: genrateRequestID,
       serviceName: findCategorie.name,
       typeOfWork: findSubCategorie.name,
@@ -256,6 +292,7 @@ if(!getProCategory || getProCategory.length == 0){
   const probookService = await insertNewDocument("proBookingService", {
     ...req.body,
     proServiceId: getProCategory._id,
+  
     professsionalId: findprofessionalId,
     bookServiceId: bookServ._id,
     categoryId:req.body.categoryId,
