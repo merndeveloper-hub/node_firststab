@@ -1,5 +1,6 @@
 import Joi from "joi";
 import {  updateDocument } from "../../../helpers/index.js";
+import createPaypalOrder from "../account/paymentMethod/paypal.js";
 
 
 const schema = Joi.object().keys({
@@ -26,7 +27,9 @@ if(!getProBookService || getProBookService.length == 0){
 
 const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBookService.bookServiceId},{...req.body,status:"OnGoing"})
 
-    return res.status(200).json({ status: 200, getProBookService,message:"Updated Book Service successfully" });
+const getPaymentLink = await createPaypalOrder()
+
+    return res.status(200).json({ status: 200, getProBookService,message:"Updated Book Service successfully",paymentLink:getPaymentLink });
   } catch (e) {
     console.log(e);
     return res.status(400).json({ status: 400, message: e.message });

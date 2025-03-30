@@ -53,7 +53,7 @@ console.log(proBookService,"proBookService");
     );
 
     // Emit data to React Native frontend via Socket.io
-    req.io.emit("updateBookingService", findUserBookService);
+  //  req.io.emit("updateBookingService", findUserBookService);
 
     const updateProBookService = await updateDocument(
       "proBookingService",

@@ -10,12 +10,14 @@ import booking from "./getBooking.js";
 import cancelledBooking from "./cancleBooking.js";
 import proServiceRequest from "./getProServiceReq.js";
 import userAcceptProServiceRequest from "./userAcceptProServiceRequest.js";
+//import mostPopularCategory from "../home/mostPopularCategory.js";
 // import releasePayment from "./releasePayment.js";
 // import refundPayment from "./refundPayment.js";
 //import historyBooking from "./historyBooking.js";
 
 
 const router = express.Router();
+
 
 ///--------User get all created,requested,accepted services------///
 router.get("/:id", booking);
@@ -43,5 +45,6 @@ router.put("/useraccept/:id", userAcceptProServiceRequest);
 
 //----Get Pro Accepted services----//
 router.get("/proaccept/:id", proServiceRequest);
+
 
 export default router;

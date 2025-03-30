@@ -6,10 +6,11 @@ import getProfessionalService from "./getProfessionalService.js";
 import getAllCategoriesWithSubcate from "../../pro/home/getAdminMainSubCategory.js";
 import getCategories from "./getAdminCategorie.js";
 import getSubCateWithPagination from "../../pro/home/getSubCategoriePagination.js";
+import mostPopularCategory from "./mostPopularCategory.js";
 
 
 import multipart from "connect-multiparty";
-import mostPopularCategory from "./mostPopularCategory.js";
+
 const multipartMiddleware = multipart();
 
 const router = express.Router();
@@ -39,8 +40,8 @@ router.get("/subcategory/:id", getSubCateWithPagination);
 
 
 
+
 //--------Get Single Admin Category With subcategories Pagination---//
 router.get("/mostpopular", mostPopularCategory);
-
 
 export default router;

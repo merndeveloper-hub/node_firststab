@@ -48,10 +48,10 @@ const getAccessToken = async (req, res) => {
     // const response = await axios.post(url, data, config)
 
     console.log(response,"response");
-
-    return res
-      .status(201)
-      .json({ status: 201, data: response.data.access_token });
+return response.data.access_token
+    // return res
+    //   .status(201)
+    //   .json({ status: 201, data: response.data.access_token });
   } catch (error) {
     console.log(error, "error");
     return res.status(400).json({ status: 400, message: error.message });

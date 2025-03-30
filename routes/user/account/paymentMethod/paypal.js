@@ -1,5 +1,6 @@
 // Create PayPal Order
 import axios from "axios";
+import getAccessToken from "./accessToken.js";
 // import getAccessToken from "./getCredentials";
 
 
@@ -12,7 +13,10 @@ const BASE_URL = "https://api-m.sandbox.paypal.com"; // Use live URL in producti
 
 const createPaypalOrder = async (req, res) => {
   try {
-   const accessToken = "A21AAJhrm3Rn6HphTT_dmYD8bGZtq6ejlw2u3cUIEy616qnhG4YuRsJ0dtmXnI9TygJbfvzbyLeKBi60820-PuTV7Kr9ngz2g"
+
+
+     const getToken = await getAccessToken()
+ //  const accessToken = "A21AAJhrm3Rn6HphTT_dmYD8bGZtq6ejlw2u3cUIEy616qnhG4YuRsJ0dtmXnI9TygJbfvzbyLeKBi60820-PuTV7Kr9ngz2g"
 
     const orderData = {
         intent: "CAPTURE",
@@ -28,13 +32,13 @@ const createPaypalOrder = async (req, res) => {
     const response = await axios.post(
         `${BASE_URL}/v2/checkout/orders`,
         orderData,
-        { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" } }
+        { headers: { Authorization: `Bearer ${getToken}`, "Content-Type": "application/json" } }
     );
   
-    res.json({ approvalUrl: response.data.links.find(link => link.rel === "approve").href });   
-    return res
-      .status(201)
-      .json({ status: 201, data: response.data.access_token });
+  return  response.data.links.find(link => link.rel === "approve").href 
+    // return res
+    //   .status(201)
+    //   .json({ status: 201, data: response.data.access_token });
   } catch (error) {
     console.log(error, "error");
     return res.status(400).json({ status: 400, message: error.message });
