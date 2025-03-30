@@ -9,6 +9,7 @@ import getSubCateWithPagination from "../../pro/home/getSubCategoriePagination.j
 
 
 import multipart from "connect-multiparty";
+import mostPopularCategory from "./mostPopularCategory.js";
 const multipartMiddleware = multipart();
 
 const router = express.Router();
@@ -35,6 +36,11 @@ router.get("/",getCategories)
 
 //--------Get Single Admin Category With subcategories Pagination---//
 router.get("/subcategory/:id", getSubCateWithPagination);
+
+
+
+//--------Get Single Admin Category With subcategories Pagination---//
+router.get("/mostpopular", mostPopularCategory);
 
 
 export default router;

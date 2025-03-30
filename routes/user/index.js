@@ -37,6 +37,8 @@ const router = express.Router();
  router.use("/home", home);
 router.use("/account", account);
  router.use("/booking", booking);
+ 
+ 
 // router.use("/pandoras", pandoras);
 // router.use("/getdata", getNfts);
 // router.use("/allowlist", allowlist);

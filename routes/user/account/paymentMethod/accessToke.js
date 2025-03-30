@@ -1,12 +1,13 @@
-const paypal = require('paypal-rest-sdk');
-paypal.configure({
-  'mode': 'sandbox', //sandbox or live
-  'client_id': '####yourclientid######',
-  'client_secret': '####yourclientsecret#####'
-});
-
-const CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID";
-const CLIENT_SECRET = "YOUR_PAYPAL_SECRET";
+// const paypal = require('paypal-rest-sdk');
+// paypal.configure({
+//   'mode': 'sandbox', //sandbox or live
+//   'client_id': '####yourclientid######',
+//   'client_secret': '####yourclientsecret#####'
+// });
+const PAYPAL_CLIENT_ID="AU-T3vm80bzgk_ygC6zvO4ECrLDxqCVsquch2-Rd_Xpakj--1C8o6pkdkBSqFxEnI9y52hGHpLJJnJ71"
+const PAYPAL_CLIENT_SECRET="EOmvmBOo_wLM_6JhuSAvCwCxaDg4ye6eR9Pt9JqyYh_lCx-zTz7X2_leuhb1w6RJuRGB2SD4TVUZUdBa"
+// const CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID";
+// const CLIENT_SECRET = "YOUR_PAYPAL_SECRET";
 
 // Get PayPal Auth Token
 
@@ -37,7 +38,7 @@ const getAccessToken = async (req, res) => {
       `${BASE_URL}/v1/oauth2/token`,
       "grant_type=client_credentials",
       {
-        auth: { username: CLIENT_ID, password: CLIENT_SECRET },
+        auth: { username: PAYPAL_CLIENT_ID, password: PAYPAL_CLIENT_SECRET },
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       }
     );
@@ -46,7 +47,7 @@ const getAccessToken = async (req, res) => {
     // Send POST request
     // const response = await axios.post(url, data, config)
 
-    //console.log(response.data,"response");
+    console.log(response,"response");
 
     return res
       .status(201)
