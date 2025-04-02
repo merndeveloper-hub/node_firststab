@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { find, findOne, getAggregate } from "../../../helpers/index.js";
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 import getProfessional from "./getProfessionalService.js";
 
 const schema = Joi.object().keys({

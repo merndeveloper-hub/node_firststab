@@ -10,6 +10,7 @@ import updateNewRequestBooking from "./updateNewRequestBooking.js";
 
 // import getOnGoingBooking from "./onGoingBooking.js";
 import cancelledBooking from "./cancelBooking.js";
+import getOnGoingBooking from "./onGoingBooking.js";
 // import historyBooking from "./historyBooking.js";
 
 
@@ -26,5 +27,10 @@ const router = express.Router();
 
 //-----Get User pending,Accepted and OnGoing request related to categorie,subCategory with serviceType----//
 router.get("/newrequest/:id", newRequestBooking);
+
+//-----Get User pending,Accepted and OnGoing request related to categorie,subCategory with serviceType----//
+router.get("/bookservices/:id", getOnGoingBooking);
+
+
 
 export default router;

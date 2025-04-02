@@ -166,10 +166,10 @@ console.log(user,"user");
         }
       );
    
-      var token = jwt.sign({ id: user._id }, SECRET, {
+      var token = jwt.sign({ id: user._id ,role:user.userType}, SECRET, {
         expiresIn: JWT_EXPIRES_IN,
       });
-      var refresh_token = jwt.sign({ id: user._id }, REFRESH_TOKEN_SECRET, {
+      var refresh_token = jwt.sign({ id: user._id, role:user.userType}, REFRESH_TOKEN_SECRET, {
         expiresIn: JWT_EXPIRES_IN_REFRESH_TOKEN,
       });
 

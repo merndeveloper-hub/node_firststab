@@ -5,6 +5,8 @@ import  {findOne} from "../../helpers/index.js";
 const tokenVerification = (req, res, next) => {
   try {
     let token = req.headers["token"];
+    console.log(token,"token");
+    
     if (!token) {
       return res
         .status(404)

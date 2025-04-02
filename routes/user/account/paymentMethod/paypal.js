@@ -1,6 +1,7 @@
 // Create PayPal Order
 import axios from "axios";
 import getAccessToken from "./accessToken.js";
+
 // import getAccessToken from "./getCredentials";
 
 
@@ -9,13 +10,15 @@ import getAccessToken from "./accessToken.js";
 // const CLIENT_SECRET = "YOUR_PAYPAL_SECRET";
 
 const BASE_URL = "https://api-m.sandbox.paypal.com"; // Use live URL in production
-
+//const BASE_URL = "https://sandbox.paypal.com";
 
 const createPaypalOrder = async (req, res) => {
   try {
 
 
      const getToken = await getAccessToken()
+     console.log(getToken,"getToke");
+     
  //  const accessToken = "A21AAJhrm3Rn6HphTT_dmYD8bGZtq6ejlw2u3cUIEy616qnhG4YuRsJ0dtmXnI9TygJbfvzbyLeKBi60820-PuTV7Kr9ngz2g"
 
     const orderData = {
@@ -24,21 +27,28 @@ const createPaypalOrder = async (req, res) => {
             amount: { currency_code: "USD", value: "50.00" }
         }],
         application_context: {
-            return_url: "https://yourapp.com/success",
-            cancel_url: "https://yourapp.com/cancel"
+            return_url: "http://localhost:5000/api/v1/user/account/payment/paypalsuccess",
+            cancel_url: "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
         }
     };
   
+    // return_url: "https://yourdomain.com/paypal/return-create?status=check",
+    // cancel_url: "https://yourdomain.com/paypal/return-create?status=cancel",
+
     const response = await axios.post(
         `${BASE_URL}/v2/checkout/orders`,
         orderData,
         { headers: { Authorization: `Bearer ${getToken}`, "Content-Type": "application/json" } }
     );
   
-  return  response.data.links.find(link => link.rel === "approve").href 
-    // return res
-    //   .status(201)
-    //   .json({ status: 201, data: response.data.access_token });
+console.log(response.data.id,"id");
+
+    // if (payment.links[i].rel === "approval_url") {
+    //   res.redirect(payment.links[i].href)
+ // return  response.data.links.find(link => link.rel === "approve").href 
+    return res
+      .status(201)
+      .json({ status: 201, data: response.data.id });
   } catch (error) {
     console.log(error, "error");
     return res.status(400).json({ status: 400, message: error.message });
