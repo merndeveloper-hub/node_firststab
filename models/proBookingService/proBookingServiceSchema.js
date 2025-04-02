@@ -95,6 +95,23 @@ const proBookingServiceSchema = new mongoose.Schema(
       enum: ["Professional", "Random"],
       default: "Random",
     },
+    orderRescheduleStatus: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderRescheduleStartTime: {
+      type: schemaType.TypeString,
+      default: " ",
+    
+    },  orderRescheduleDate: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderExtendStatus: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderExtendEndTime: {
+      type: schemaType.TypeString,
+      default: " ",
+    }, 
     status: {
       type: schemaType.TypeString,
       enum: ["Cancelled", "Approved", "Completed", "OnGoing", "Pending"],

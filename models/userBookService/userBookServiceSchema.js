@@ -74,6 +74,24 @@ const userBookServSchema = new mongoose.Schema(
       ],
       default: "Pending",
     },
+
+ orderRescheduleStatus: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderRescheduleStartTime: {
+      type: schemaType.TypeString,
+      default: " ",
+    
+    },  orderRescheduleDate: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderExtendStatus: {
+      type: schemaType.TypeString,
+      default: " ",
+    },  orderExtendEndTime: {
+      type: schemaType.TypeString,
+      default: " ",
+    }, 
     reasonCancel: {
       type: schemaType.TypeString,
       enum: [
