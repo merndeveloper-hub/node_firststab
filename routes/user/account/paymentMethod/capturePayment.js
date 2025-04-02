@@ -32,8 +32,8 @@ const capturePayment = async (req, res) => {
 console.log(orderID,"ORDER");
 
       const response = await axios.post(
-        `https://api-m.sandbox.paypal.com/v2/checkout/orders/${orderID}/capture`,
-       
+        "https://api-m.sandbox.paypal.com/v2/checkout/orders/3M027863FD980352X/capture",
+        {},
         { headers: { Authorization: `Bearer ${getToken}`, "Content-Type": "application/json" } }
     );
 
@@ -45,7 +45,12 @@ console.log(response,"response");
       .json({ status: 201, data: response.data });
 
     } catch (error) {
-
+      console.error("Error capturing payment:", error.response?.data || error.message);
+      return res.status(500).json({
+        status: 500,
+        message: "Failed to capture payment",
+        error: error.message,
+      });
     }
 
 }

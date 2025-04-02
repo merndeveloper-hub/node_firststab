@@ -42,13 +42,34 @@ const createPaypalOrder = async (req, res) => {
     );
   
 console.log(response.data.id,"id");
-
+const data = {
+    id:response.data.id,
+    "status": "CREATED",
+    "links": [
+              {
+                "href": response.data.links.find(link => link.rel === "approve").href,
+                "rel": "approve",
+                "method": "GET"
+              }
+            ]
+}
+// {
+//     "id": "7JJ4557587965070M",
+//     "status": "CREATED",
+//     "links": [
+//       {
+//         "href": "https://www.sandbox.paypal.com/checkoutnow?token=7JJ4557587965070M",
+//         "rel": "approve",
+//         "method": "GET"
+//       }
+//     ]
+//   }
     // if (payment.links[i].rel === "approval_url") {
     //   res.redirect(payment.links[i].href)
  // return  response.data.links.find(link => link.rel === "approve").href 
     return res
       .status(201)
-      .json({ status: 201, data: response.data.id });
+      .json({ status: 201, data:data });
   } catch (error) {
     console.log(error, "error");
     return res.status(400).json({ status: 400, message: error.message });

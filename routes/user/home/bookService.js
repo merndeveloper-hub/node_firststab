@@ -102,27 +102,14 @@ console.log(req.body,"body");
     }
     
 
-    // if (!req?.files?.media?.path) {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     message: "media Image is required",
-    //   });
-    // }
-    // const cloudObj = await cloudinary.uploader.upload(
-    //   req?.files?.media?.path,{quality: 20}
-    // );
-    // req.body.media = cloudObj.url;
-
+ 
 
     let uploadedFiles = [];
     console.log(uploadedFiles,"uploadedFiles");
-    if (req.files.media) {
     
-    
-    
-    
-   // try {
-      // Ensure nft_image is treated as an array
+    if (req?.files?.media) {
+
+
       const bookServiceImages = Array.isArray(req.files.media) 
         ? req.files.media 
         : [req.files.media];
@@ -134,39 +121,7 @@ console.log(req.body,"body");
     
       req.body.images = uploadedFiles;
     }
-      // res.status(200).json({
-      //   status: 200,
-      //   message: "Files uploaded successfully",
-      //   images: uploadedFiles,
-      // });
-    
-    // } catch (error) {
-    //   console.error("Upload Error:", error);
-    //   res.status(500).json({
-    //     status: 500,
-    //     message: "Error uploading files",
-    //     error: error.message,
-    //   });
-    // }
-    
-    
-    // let uploadedFiles;
-    // if (req?.files?.media) {
-    //   // Upload All Files to Cloudinary
-    //   uploadedFiles = await Promise.all(
-    //     req.files.map(async (file) => {
-    //       const options = file.mimetype.startsWith("video")
-    //         ? { resource_type: "video", allowed_formats: ["mp4", "avi", "mov"] }
-    //         : { quality: 20, allowed_formats: ["jpg", "jpeg", "png", "jfif"] };
-
-    //       const result = await cloudinary.uploader.upload(file.path, options);
-    //       return result.secure_url;
-    //     })
-    //   );
-    // }
-    
-    ///////////-----Convert date and time------------------///
-    // Extract date and time
+      
     let extractedDate, extractedTime, extractedEndDate, extractedEndTime;
 console.log(req.body.subCategories.orderStartTime,"orderStartDate");
 
@@ -388,6 +343,7 @@ for (const doc of getProCategory) {
           subCategoryId:req.body.subCategories.id,
         media: uploadedFiles ? uploadedFiles : undefined,
         requestId: genrateRequestID,
+        serviceAssign:"Professional",
         serviceType: req.body.subCategories.serviceType,
         serviceName: findCategorie.name,
         typeOfWork: findSubCategorie.name,
