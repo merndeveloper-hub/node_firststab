@@ -4,8 +4,8 @@
 //   'client_id': '####yourclientid######',
 //   'client_secret': '####yourclientsecret#####'
 // });
-const PAYPAL_CLIENT_ID="AU-T3vm80bzgk_ygC6zvO4ECrLDxqCVsquch2-Rd_Xpakj--1C8o6pkdkBSqFxEnI9y52hGHpLJJnJ71"
-const PAYPAL_CLIENT_SECRET="EOmvmBOo_wLM_6JhuSAvCwCxaDg4ye6eR9Pt9JqyYh_lCx-zTz7X2_leuhb1w6RJuRGB2SD4TVUZUdBa"
+const PAYPAL_CLIENT_ID="AVA2XCsB7JMyv6doidcQSEMddfdDdMH1dqO8Ss3tSECeahRvfBVcjWdKeME5nelOuXab4KfB73ue8FU3"
+const PAYPAL_CLIENT_SECRET="ECOwywA12OtKSUlg4Gxi88L8c5cWLxtNPBFuEXV0KAB5zpfMUP1m-q5gSr8DPm4WwK-dp32LntDBq6oF"
 // const CLIENT_ID = "YOUR_PAYPAL_CLIENT_ID";
 // const CLIENT_SECRET = "YOUR_PAYPAL_SECRET";
 
