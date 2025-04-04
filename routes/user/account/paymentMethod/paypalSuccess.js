@@ -22,7 +22,7 @@ const paypalSuccess = async(req, res) => {
     // console.log(getToken,"getToke");
 // const orderId = "09F82665VX572742U"
     const executeResponse = await axios.post(
-      `https://api-m.sandbox.paypal.com/v2/checkout/orders/${req.query.toke}/capture`,
+      `https://api-m.sandbox.paypal.com/v2/checkout/orders/${req.query.token}/capture`,
       {},
       {
         headers: {
