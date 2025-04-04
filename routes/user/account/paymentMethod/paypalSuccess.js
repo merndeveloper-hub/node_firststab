@@ -22,7 +22,7 @@ const paypalSuccess = async(req, res) => {
     // console.log(getToken,"getToke");
 // const orderId = "09F82665VX572742U"
     const executeResponse = await axios.post(
-      `https://api-m.sandbox.paypal.com/v2/checkout/orders/${req.query.token}/capture`,
+      `https://api-m.sandbox.paypal.com/v2/checkout/orders/${req.query.toke}/capture`,
       {},
       {
         headers: {
@@ -43,16 +43,21 @@ const paypalSuccess = async(req, res) => {
     //     },
     //   }
     // );
-    
+    if(!executeResponse || executeResponse.length == 0){
+      res.redirect(
+        "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
+      );
+    }
     console.log("Payment Success:", executeResponse.data);
-    res.send("Payment Success");
+    return res.status(201).json({ status: 201, message: "Payment Success" });
+
   } catch (error) {
     console.error(
       "Error executing PayPal payment:",
       error.response ? error.response.data : error.message
     );
     res.redirect(
-      "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
+      "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
     );
   }
 

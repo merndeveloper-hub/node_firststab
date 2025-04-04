@@ -1,21 +1,32 @@
-import Joi from "joi";
+//import Joi from "joi";
 import {  updateDocument } from "../../../helpers/index.js";
 import createPaypalOrder from "../account/paymentMethod/paypal.js";
 
 
-const schema = Joi.object().keys({
-  id: Joi.string().required(),
-});
+// const schema = Joi.object().keys({
+//   id: Joi.string().required(),
+// });
 
-const schemaBody = Joi.object().keys({
-  addInstruction : Joi.string(),
-});
+// const schemaBody = Joi.object().keys({
+//   addInstruction : Joi.string(),
+// });
+
+// const payload ={
+//   _id: _id,
+//   bookServiceId:bookServiceId,
+//   categoryId:categoryId,
+//   professsionalId:professsionalId,
+//   userId:userId,
+//   proServiceId:proServiceId,
+//   addInstruction:addInstruction
+// }
+
 
 const userAcceptProServiceRequest = async (req, res) => {
   try {
   
-    await schema.validateAsync(req.params);
-  await schemaBody.validateAsync(req.body);
+   // await schema.validateAsync(req.params);
+  //await schemaBody.validateAsync(req.body);
 
     const { id } = req.params;
 
@@ -29,7 +40,7 @@ const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBoo
 
 const getPaymentLink = await createPaypalOrder()
 
-    return res.status(200).json({ status: 200, getProBookService,message:"Updated Book Service successfully",paymentLink:getPaymentLink });
+    return res.status(200).json({ status: 200, getProBookService,message:"Updated Book Service successfully"});
   } catch (e) {
     console.log(e);
     return res.status(400).json({ status: 400, message: e.message });
