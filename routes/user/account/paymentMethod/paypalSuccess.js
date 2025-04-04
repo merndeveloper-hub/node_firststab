@@ -45,11 +45,13 @@ const paypalSuccess = async(req, res) => {
     // );
     if(!executeResponse || executeResponse.length == 0){
       res.redirect(
-        "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
+        "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
       );
     }
     console.log("Payment Success:", executeResponse.data);
-    return res.status(201).json({ status: 201, message: "Payment Success" });
+  return  res.send("<html><body style='background:#fff;'><h3>Payment Success. You can close this window.</h3><script>window.close()</script></body></html>");
+
+    //return res.status(201).json({ status: 201, message: "Payment Success" });
 
   } catch (error) {
     console.error(
@@ -57,7 +59,7 @@ const paypalSuccess = async(req, res) => {
       error.response ? error.response.data : error.message
     );
     res.redirect(
-      "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
+      "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
     );
   }
 
