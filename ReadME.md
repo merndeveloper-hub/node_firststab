@@ -29,6 +29,7 @@ http://localhost:5000/api/v1/auth/resendotp
 
 http://localhost:5000/api/v1/pro/home ==> update dekhnii hian kl
 
+backend server ip ==> http://3.110.42.187:5000
 
 db error ==> 401
 vadioaion error ==> 400

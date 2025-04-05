@@ -2,7 +2,7 @@
 
 const paymentCancel = (req, res) => {
  try {
- return res.send("<html><body style='background:#fff;'><h3>Payment Cancelled. You can close this window.</h3><script>window.close()</script></body></html>");
+ return res.send("<html><body style='background:#fff;'></body></html>");
 
 // return res.status(200).json({ status: 200, message: 'Your payment has been cancelled!'});
  } catch (error) {

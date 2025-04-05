@@ -49,7 +49,7 @@ const paypalSuccess = async(req, res) => {
       );
     }
     console.log("Payment Success:", executeResponse.data);
-  return  res.send("<html><body style='background:#fff;'><h3>Payment Success. You can close this window.</h3><script>window.close()</script></body></html>");
+  return  res.send("<html><body style='background:#fff;'></body></html>");
 
     //return res.status(201).json({ status: 201, message: "Payment Success" });
 
