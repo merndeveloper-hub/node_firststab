@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import PaymentSchema from "./paymentSchema.js";
+import userPaymentSchema from "./userPaymentSchema.js";
 
-const payment = mongoose.model("payment", PaymentSchema);
+const userPayment = mongoose.model("userPayment", userPaymentSchema);
 
-export default payment;
+export default userPayment;

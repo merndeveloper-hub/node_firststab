@@ -25,7 +25,7 @@ const createPaypalOrder = async (req, res) => {
             currency_code: "USD",
             value: amount,
           },
-          description: "Payment for order",
+          description: "Payment for service",
         },
       ],
       application_context: {
