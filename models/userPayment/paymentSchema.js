@@ -8,10 +8,12 @@ const PaymentSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
-    professsionalId: { type: SchemaType.ObjectID, ref: "User"},
-    bookServiceId: { type: SchemaType.ObjectID, ref: "User"},
-    proServiceId: { type: SchemaType.ObjectID, ref: "User"},
-    categoryId: { type: SchemaType.ObjectID, ref: "User"},
+    professsionalId: { type: SchemaType.ObjectID, ref: "user"},
+    bookServiceId: { type: SchemaType.ObjectID, ref: "userBookServ"},
+    proServiceId: { type: SchemaType.ObjectID, ref: "proBookingService"},
+    categoryId: { type: SchemaType.ObjectID, ref: "category"},
+    userAccpetBookingId: { type: SchemaType.ObjectID, ref: "User"},
+    
     amount: {
       type: SchemaType.TypeNumber,
       required: true

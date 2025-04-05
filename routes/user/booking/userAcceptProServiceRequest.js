@@ -38,7 +38,7 @@ if(!getProBookService || getProBookService.length == 0){
 
 const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBookService.bookServiceId},{...req.body,status:"OnGoing"})
 
-const getPaymentLink = await createPaypalOrder()
+//const getPaymentLink = await createPaypalOrder()
 
     return res.status(200).json({ status: 200, getProBookService,message:"Updated Book Service successfully"});
   } catch (e) {

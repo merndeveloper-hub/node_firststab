@@ -17,7 +17,8 @@ const createPaypalOrder = async (req, res) => {
     //  const accessToken = "A21AAJhrm3Rn6HphTT_dmYD8bGZtq6ejlw2u3cUIEy616qnhG4YuRsJ0dtmXnI9TygJbfvzbyLeKBi60820-PuTV7Kr9ngz2g"
 
     const orderData = {
-      intent: "CAPTURE", // Use "CAPTURE" instead of "sale"
+    //  intent: "CAPTURE", // Use "CAPTURE" instead of "sale"
+      intent: "AUTHORIZE",  // This will authorize the amount but not transfer it yet.
       purchase_units: [
         {
           amount: {
