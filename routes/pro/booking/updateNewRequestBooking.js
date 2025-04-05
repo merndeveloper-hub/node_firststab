@@ -48,7 +48,7 @@ console.log(proBookService,"proBookService");
       {
         
         quoteCount: findUserBookService.quoteCount + 1,
-        proBookingServiceId: id,
+       // proBookingServiceId: id,
       }
     );
 
@@ -58,7 +58,7 @@ console.log(proBookService,"proBookService");
     const updateProBookService = await updateDocument(
       "proBookingService",
       { _id: id },
-      { status: "Accepted", ...req.body,service_fee:0.05,tax_fee:1.5,total_amount:quoteAmount+0.05+1.5 ,total_amount_cus_pay:quoteAmount+0.05+1.5 }
+      { status: "Accepted",service_fee:0.05,tax_fee:1.5,total_amount:quoteAmount+0.05+1.5 ,total_amount_cus_pay:quoteAmount+0.05+1.5 }
     );
 
     return res

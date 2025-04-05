@@ -1,6 +1,6 @@
 //import Joi from "joi";
-import {  updateDocument } from "../../../helpers/index.js";
-import createPaypalOrder from "../account/paymentMethod/paypal.js";
+import {  updateDocument, updateDocuments } from "../../../helpers/index.js";
+
 
 
 // const schema = Joi.object().keys({
@@ -21,7 +21,7 @@ import createPaypalOrder from "../account/paymentMethod/paypal.js";
 //   addInstruction:addInstruction
 // }
 
-
+//Rejected
 const userAcceptProServiceRequest = async (req, res) => {
   try {
   
@@ -30,13 +30,19 @@ const userAcceptProServiceRequest = async (req, res) => {
 
     const { id } = req.params;
 
-    const getProBookService = await updateDocument("proBookingService",{_id:id},{...req.body,status:"OnGoing"})
+    const getProBookService = await updateDocument("proBookingService",{_id:id},{status:"Accepted"})
+
 
 if(!getProBookService || getProBookService.length == 0){
   return res.status(200).json({ status: 200, message: "No professional quotes available at the moment." });
 }
 
-const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBookService.bookServiceId},{...req.body,status:"OnGoing"})
+const userBookServiceUpdate = await updateDocument("userBookServ",{_id:getProBookService.bookServiceId},{status:"Accepted"})
+
+
+const remainingProRejected = await updateDocuments("proBookingService",{bookServiceId:getProBookService.bookServiceId,status:"Pending"},{status:"Rejected"})
+
+
 
 //const getPaymentLink = await createPaypalOrder()
 

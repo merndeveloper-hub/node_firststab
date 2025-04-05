@@ -114,7 +114,7 @@ const proBookingServiceSchema = new mongoose.Schema(
     }, 
     status: {
       type: schemaType.TypeString,
-      enum: ["Cancelled", "Approved", "Completed", "OnGoing", "Pending"],
+      enum: ["Cancelled", "Accepted", "Completed", "OnGoing", "Pending","Rejected"],
       default: "OnGoing",
     },
   },
