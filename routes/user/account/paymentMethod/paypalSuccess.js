@@ -45,7 +45,7 @@ const paypalSuccess = async(req, res) => {
     // );
     if(!executeResponse || executeResponse.length == 0){
       res.redirect(
-        "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
+        "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
       );
     }
     console.log("Payment Success:", executeResponse.data);
@@ -59,7 +59,7 @@ const paypalSuccess = async(req, res) => {
       error.response ? error.response.data : error.message
     );
     res.redirect(
-      "http://localhost:5000/api/v1/user/account/payment/paypalcancel"
+      "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel"
     );
   }
 
