@@ -1,24 +1,29 @@
-
 import axios from "axios";
 import getAccessToken from "./accessToken.js";
+//import Joi from "joi";
 
 
-
-
-const BASE_URL = "https://api-m.sandbox.paypal.com"; // Use live URL in production
-//const BASE_URL = "https://sandbox.paypal.com";
+// const schema = Joi.object({
+//   amount:Joi.number().required(),
+//   userId:Joi.string(),
+//   proServiceId:Joi.string(),
+//   professsionalId:Joi.string(),
+//   bookServiceId:Joi.string(),
+//   userAccpetBookingId:Joi.string(),
+// })
 
 const createPaypalOrder = async (req, res) => {
   try {
-    const { amount } = req.body;
+ //   await schema.validateAsync(req.body)
+    const { amount,userId,proServiceId,professsionalId,bookServiceId,userAccpetBookingId } = req.body;
     const getToken = await getAccessToken();
-    console.log(getToken, "getToke");
-
-    //  const accessToken = "A21AAJhrm3Rn6HphTT_dmYD8bGZtq6ejlw2u3cUIEy616qnhG4YuRsJ0dtmXnI9TygJbfvzbyLeKBi60820-PuTV7Kr9ngz2g"
+   
+    const BASE_URL = "https://api-m.sandbox.paypal.com"; // Use live URL in production
+    //const BASE_URL = "https://sandbox.paypal.com";
 
     const orderData = {
-    //  intent: "CAPTURE", // Use "CAPTURE" instead of "sale"
-      intent: "AUTHORIZE",  // This will authorize the amount but not transfer it yet.
+      //  intent: "CAPTURE", // Use "CAPTURE" instead of "sale"
+      intent: "AUTHORIZE", // This will authorize the amount but not transfer it yet.
       purchase_units: [
         {
           amount: {
@@ -30,9 +35,9 @@ const createPaypalOrder = async (req, res) => {
       ],
       application_context: {
         return_url:
-          "http://3.110.42.187:5000/api/v1/user/account/payment/paypalsuccess",
+          "http://localhost:5000/api/v1/user/account/payment/paypalsuccess",
         cancel_url:
-          "http://3.110.42.187:5000/api/v1/user/account/payment/paypalcancel",
+          "http://localhost:5000/api/v1/user/account/payment/paypalcancel",
       },
     };
 
@@ -46,7 +51,11 @@ const createPaypalOrder = async (req, res) => {
         },
       }
     );
-   
+
+    if(!response || response.length == 0){
+      return res.status(400).json({ status: 400, message: "Try Again!" });
+    }
+
     const data = {
       id: response.data.id,
       status: "CREATED",
@@ -59,17 +68,13 @@ const createPaypalOrder = async (req, res) => {
       ],
     };
 
-    console.log("enter");
+// const userPayment = await insertNewDocument("userPayment",{...req.body}) 
 
-    // await paypalSuccess(response.data.id);
-
-    console.log("final");
     return res.status(201).json({ status: 201, data: data });
   } catch (error) {
-    // console.log(error, "error");
     return res.status(400).json({ status: 400, message: error.message });
-    // throw new Error("Authentication failed");
   }
 };
 
 export default createPaypalOrder;
+

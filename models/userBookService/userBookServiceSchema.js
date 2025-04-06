@@ -77,20 +77,20 @@ const userBookServSchema = new mongoose.Schema(
 
  orderRescheduleStatus: {
       type: schemaType.TypeString,
-      default: " ",
+      default: "NA",
     },  orderRescheduleStartTime: {
       type: schemaType.TypeString,
-      default: " ",
+      default: "",
     
     },  orderRescheduleDate: {
       type: schemaType.TypeString,
-      default: " ",
+      default: "",
     },  orderExtendStatus: {
       type: schemaType.TypeString,
-      default: " ",
+      default: "",
     },  orderExtendEndTime: {
       type: schemaType.TypeString,
-      default: " ",
+      default: "",
     }, 
     reasonCancel: {
       type: schemaType.TypeString,

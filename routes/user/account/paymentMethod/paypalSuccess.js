@@ -30,10 +30,18 @@ const {token} = req.query
     authorizeRes.data.purchase_units[0].payments.authorizations[0].id;
 console.log(authorizationId,"authorizationId");
 
-  // Send minimal success response
-  //return res.send("<html><body style='background:#fff;'>Payment Authorized</body></html>");
 
-
+// {
+//   user_id: "abc123", // Your internal user
+//   order_id: "9PD95619CM091553K",
+//   authorization_id: "7DC12345678901234", // from response
+//   amount: "100.00",
+//   currency: "USD",
+//   payer_email: "sb-0ednp39692134@personal.example.com",
+//   payer_id: "38FKW7CCADZ5Q",
+//   status: "AUTHORIZED", // status for tracking (can later be CAPTURED / VOIDED)
+//   created_at: new Date(),
+// }
 
 
     // const executeResponse = await axios.post(

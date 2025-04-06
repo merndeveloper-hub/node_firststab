@@ -8,17 +8,16 @@ import userOTP from "./otpVerification/index.js";
 import category from "./categorie/index.js";
 import subCategory from "./subCategorie/index.js";
 //import subSubCategory from "./subSubCategorie/index.js";
-//import counter from "./counter/index.js";
+import faqCategory from "./faqCategorie/index.js";
 import proCategory from "./proCategorie/index.js";
 import proBusin from "./proBusiness/index.js";
 import token from "./token/index.js";
 import content from "./content/index.js";
-import faqCategory from "./faqCategorie/index.js";
+import userPayment from "./userPayment/index.js";
 import faqQuestion from "./faqQuestion/index.js";
 import payment from "./payments/index.js";
 import contactUs from "./contactUs/index.js";
 import userBookServ from "./userBookService/index.js";
-
 import address from "./address/index.js";
 import bookingDetail from "./booking/index.js";
 import proBookingService from "./proBookingService/index.js";
@@ -54,6 +53,7 @@ db.user = user
  db.bookingDetail=bookingDetail
  db.address=address
  db.proBookingService=proBookingService
+ db.userPayment = userPayment
 // db.follow = require("./follow");
 // db.nft = require("./nft");
 // db.blog = require("./blog");
